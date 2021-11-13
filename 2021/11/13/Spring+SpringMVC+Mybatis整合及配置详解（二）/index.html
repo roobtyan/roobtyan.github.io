@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="c404671c98baec6e04e353a0f32423fa">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言本文承接上一篇文章《Spring+SpringMVC+Mybatis整合开发思路及配置详解（一）》，上一篇文章我们回顾了SSM的相关知识，讲述了一个SSM项目的目录结构，并用图片的形式展示了SSM项目的架构。前期准备工作已经完成，接下来就要进入真正的项目搭建了。我现将上一讲中的目录结构给出，以防有的同学只看了这一章的内容。 我们使用IDEA作为开发工具，IDEA真的是一个非常强大的开发工具了，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring+SpringMVC+Mybatis整合及配置详解（二）">
+<meta property="og:url" content="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="默默无闻贤鱼言">
+<meta property="og:description" content="前言本文承接上一篇文章《Spring+SpringMVC+Mybatis整合开发思路及配置详解（一）》，上一篇文章我们回顾了SSM的相关知识，讲述了一个SSM项目的目录结构，并用图片的形式展示了SSM项目的架构。前期准备工作已经完成，接下来就要进入真正的项目搭建了。我现将上一讲中的目录结构给出，以防有的同学只看了这一章的内容。 我们使用IDEA作为开发工具，IDEA真的是一个非常强大的开发工具了，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-13T04:47:29.364Z">
+<meta property="article:modified_time" content="2021-11-09T04:43:07.260Z">
+<meta property="article:author" content="ROOBTYAN">
+<meta property="article:tag" content="JavaWeb">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%8C%EF%BC%89/","path":"2021/11/13/Spring+SpringMVC+Mybatis整合及配置详解（二）/","title":"Spring+SpringMVC+Mybatis整合及配置详解（二）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring+SpringMVC+Mybatis整合及配置详解（二） | 默默无闻贤鱼言</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">默默无闻贤鱼言</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">多啦没A梦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-计划"><a href="/plan/" rel="section"><i class="fa fa-calendar fa-fw"></i>计划</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8IDEA%E6%90%AD%E5%BB%BASSM%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">使用IDEA搭建SSM环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BAMaven%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.0.1.</span> <span class="nav-text">新建Maven项目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%8C%85%E5%8F%8A%E7%9B%AE%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">新建包及目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E5%86%99Maven%E4%BE%9D%E8%B5%96"><span class="nav-number">4.</span> <span class="nav-text">编写Maven依赖</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ROOBTYAN"
+      src="/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">ROOBTYAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:roobtyan@outlook.com" title="E-Mail → mailto:roobtyan@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring+SpringMVC+Mybatis整合及配置详解（二）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:07" itemprop="dateModified" datetime="2021-11-09T12:43:07+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文承接上一篇文章《Spring+SpringMVC+Mybatis整合开发思路及配置详解（一）》，上一篇文章我们回顾了SSM的相关知识，讲述了一个SSM项目的目录结构，并用图片的形式展示了SSM项目的架构。前期准备工作已经完成，接下来就要进入真正的项目搭建了。<br>我现将上一讲中的目录结构给出，以防有的同学只看了这一章的内容。<br><img src=""></p>
+<p>我们使用<strong>IDEA</strong>作为开发工具，IDEA真的是一个非常强大的开发工具了，学习成本很低，没有转过来的小伙伴赶紧转过来吧。</p>
+<h1 id="使用IDEA搭建SSM环境"><a href="#使用IDEA搭建SSM环境" class="headerlink" title="使用IDEA搭建SSM环境"></a>使用IDEA搭建SSM环境</h1><h3 id="新建Maven项目"><a href="#新建Maven项目" class="headerlink" title="新建Maven项目"></a>新建Maven项目</h3><p>大家可以按照下面的步骤搭建环境：<br><img src=""><br><img src=""><br><img src=""></p>
+<span id="more"></span>
+
+<p>后面的就一路Next下去就可以了。接着就需要等待IDEA帮助我们生成一个基本的WEB项目。</p>
+<h1 id="新建包及目录"><a href="#新建包及目录" class="headerlink" title="新建包及目录"></a>新建包及目录</h1><p>IDEA生成项目完成以后，初始的目录是这个样子的：<br><img src=""></p>
+<p>接着，我们就在main中新建一个java，并标记为sources root。然后在java中新建包，这个前面最好和一开始的组名相同，后面就是项目名，所以我的就是com.roobtyan.ssm<br><img src=""><br><img src=""></p>
+<p>然后就可以在包中新建目录了，使用快捷键组合Ctrl+Shift+Alt+S，打开项目配置，找到model，如下图。<br><img src=""></p>
+<p>然后，右键新建目录，所有目录创建完成后是这个样子的：<br><img src=""></p>
+<p>其实我们的配置文件，除了SpringMVC的，都是在resouces这个目录中的，为了能够让Spring等初始化的时候找到我们的配置文件，需要标记这个目录为资源目录。右键，找到Marked as……这一项。<br><img src=""></p>
+<h1 id="编写Maven依赖"><a href="#编写Maven依赖" class="headerlink" title="编写Maven依赖"></a>编写Maven依赖</h1><p>ok，基本的目录我们已经配置好了，接下来要做的事情就是引入项目依赖的jar文件了。</p>
+<table>
+<thead>
+<tr>
+<th>jar文件名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>spring-webmvc</td>
+<td>这是SpringMVC的jar包</td>
+</tr>
+<tr>
+<td>spring-jdbc</td>
+<td>SpringJDBC，我们需要用到，属于依赖的依赖</td>
+</tr>
+<tr>
+<td>spring-test</td>
+<td>Spring的单元测试整合jar，在单元测试的时候会用到</td>
+</tr>
+<tr>
+<td>spring-aspects</td>
+<td>Spring的APO模块jar文件</td>
+</tr>
+<tr>
+<td>mybatis</td>
+<td>mybatis的核心</td>
+</tr>
+<tr>
+<td>mybatis-spring</td>
+<td>mybatis-Spring的整合适配器</td>
+</tr>
+<tr>
+<td>c3p0</td>
+<td>为了保证项目的效率，引入数据库连接池，同样可以替换为DBPC或者阿里的连接池</td>
+</tr>
+<tr>
+<td>mysql-connector-java</td>
+<td>mysql的连接器，这个版本号要看你装的mysql的版本，因为我的是8，所以版本可能和你们的有些区别</td>
+</tr>
+<tr>
+<td>jstl</td>
+<td>引入jsp的JSTL支持</td>
+</tr>
+<tr>
+<td>javax.servlet-api</td>
+<td>Servlet的支持jar文件</td>
+</tr>
+<tr>
+<td>junit</td>
+<td>单元测试需要的jar文件，与spring-test整合在一起</td>
+</tr>
+<tr>
+<td>log4j</td>
+<td>日志jar文件，这个jar在配置后，可以在控制台打印运行时日志，有必要还可以存入文件</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/13/redis%E5%AE%89%E8%A3%85/" rel="prev" title="redis在ubuntu下的安装">
+                  <i class="fa fa-chevron-left"></i> redis在ubuntu下的安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/" rel="next" title="Spring+SpringMVC+Mybatis整合及配置详解（一）">
+                  Spring+SpringMVC+Mybatis整合及配置详解（一） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UCAS ROOBTYAN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

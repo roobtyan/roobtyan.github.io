@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="c404671c98baec6e04e353a0f32423fa">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本文讲什么？有一次，知乎上的同学问我：“为什么使用迅雷下载东西的时候，最后的百分之一总是那么慢呢？还有，为什么传输文件的时候，到最后的那一块也是那么慢呢？”一看这位同学就是个善于发现之人，能成大事。其实原因非常简单，对于迅雷来说，一般使用的是P2P（点对点）的传输方式，最后的百分之一时（也有可能是下载中的每个时刻），迅雷就把你作为了点对点中的一个点，让其他人从你这里下载资源，如果你下载完成了，那不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="漫谈计算机组成原理（六）校验方法">
+<meta property="og:url" content="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%85%AD%EF%BC%89%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="默默无闻贤鱼言">
+<meta property="og:description" content="本文讲什么？有一次，知乎上的同学问我：“为什么使用迅雷下载东西的时候，最后的百分之一总是那么慢呢？还有，为什么传输文件的时候，到最后的那一块也是那么慢呢？”一看这位同学就是个善于发现之人，能成大事。其实原因非常简单，对于迅雷来说，一般使用的是P2P（点对点）的传输方式，最后的百分之一时（也有可能是下载中的每个时刻），迅雷就把你作为了点对点中的一个点，让其他人从你这里下载资源，如果你下载完成了，那不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%A0%A1%E9%AA%8C%E4%BD%8D.PNG?raw=true">
+<meta property="og:image" content="https://raw.githubusercontent.com/roobtyan/BlogPictures/master/computer_associated/%E5%A5%87%E6%A0%A1%E9%AA%8C1.PNG">
+<meta property="og:image" content="https://github.com/roobtyan/BlogPictures/raw/master/computer_associated/%E7%BA%A0%E9%94%99.PNG">
+<meta property="article:published_time" content="2021-11-13T04:47:29.458Z">
+<meta property="article:modified_time" content="2021-11-09T04:42:05.168Z">
+<meta property="article:author" content="ROOBTYAN">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%A0%A1%E9%AA%8C%E4%BD%8D.PNG?raw=true">
+
+
+<link rel="canonical" href="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%85%AD%EF%BC%89%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%85%AD%EF%BC%89%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%B3%95/","path":"2021/11/13/漫谈计算机组成原理（六）校验方法/","title":"漫谈计算机组成原理（六）校验方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>漫谈计算机组成原理（六）校验方法 | 默默无闻贤鱼言</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">默默无闻贤鱼言</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">多啦没A梦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-计划"><a href="/plan/" rel="section"><i class="fa fa-calendar fa-fw"></i>计划</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E8%AE%B2%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">本文讲什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">校验方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%B7%E6%98%8E%E7%A0%81%E6%A0%A1%E9%AA%8C"><span class="nav-number">2.0.1.</span> <span class="nav-text">海明码校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81%EF%BC%88CRC%EF%BC%89"><span class="nav-number">2.0.2.</span> <span class="nav-text">循环冗余校验码（CRC）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ROOBTYAN"
+      src="/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">ROOBTYAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:roobtyan@outlook.com" title="E-Mail → mailto:roobtyan@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%85%AD%EF%BC%89%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          漫谈计算机组成原理（六）校验方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:05" itemprop="dateModified" datetime="2021-11-09T12:42:05+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="本文讲什么？"><a href="#本文讲什么？" class="headerlink" title="本文讲什么？"></a>本文讲什么？</h1><p>有一次，知乎上的同学问我：“为什么使用迅雷下载东西的时候，最后的百分之一总是那么慢呢？还有，为什么传输文件的时候，到最后的那一块也是那么慢呢？”<br>一看这位同学就是个善于发现之人，能成大事。<br>其实原因非常简单，对于迅雷来说，一般使用的是P2P（点对点）的传输方式，最后的百分之一时（也有可能是下载中的每个时刻），迅雷就把你作为了点对点中的一个点，让其他人从你这里下载资源，如果你下载完成了，那不就是不能明目张胆的这么干了吗，这个时候你只需要将任务暂停，然后重新开始，马上就下载完了；还有一个原因是迅雷正在进行文件的校验，这部分其实是涉及到计算机网络的内容了，今后我们会详细的讲这块的东西。<br>而对于文件传输的时候，最后的部分也会感觉到慢（很少见），是因为计算机传输比特流的过程中也会去校验文件，看看传过来的比特流是否发生错误。<br>所以，我们今天的主题是“<strong>数据校验方法</strong>”。我们讲两种校验方法，一种叫做“海明码（汉明码）校验法”，另外一种是CRC（循环冗余）校验。这两种有着不同的应用场景，下面就来开始正式的内容。</p>
+<span id="more"></span>
+
+<h1 id="校验方法"><a href="#校验方法" class="headerlink" title="校验方法"></a>校验方法</h1><p>上面讲了，在数据传输的过程中是需要进行信息的校验的——因为数据在传输过程中有各种原因（磁场、电流等）会导致数据出错，比特位从0变成1，或者由1变成0。这样就造成了数据出错，所以即时发并予以纠正，就显得尤为重要了，毕竟谁也不想得到错误的信息不是。</p>
+<h3 id="海明码校验"><a href="#海明码校验" class="headerlink" title="海明码校验"></a>海明码校验</h3><p>海明码由来已久，是理查德·海明于1950年提出的。<br>首先来说下海明码的数字位：海明码的数字位分成校验位和数据位。那么，什么是数据位什么又是校验位呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 0 1 1 0 1 0 0 1</span><br></pre></td></tr></table></figure>
+<p>所谓的校验位，就是用于校验数据位是否正确的辅助数字；而数据位就是真实传输的二进制数。看上面的数字，共有9位，那么哪些是校验位，哪些又是数字位呢？<br>海明码规定，2^n-1（n=1,2,3，……）位就是校验位。所以上面的数字中：1、2、4、8……就是校验位。除了校验位剩下的就是数据位。<br>那么，如何确定校验位的个数呢？其实有这样一个公式2^k &gt;= n+k+1。n是需要校验的数据共有多少位，自然可以求出k的值，k就是校验位的个数。</p>
+<p>不同的校验位，负责校验的数据位各不相同。下面是校验规则：<br><img src="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%A0%A1%E9%AA%8C%E4%BD%8D.PNG?raw=true"></p>
+<p>图中没有给出的第C8则是负责校验8、9、10、11、12、13、14、15、24……位。其实这也是有规律的，但是上面的这几位一般就够用了，所以感兴趣的同学可以自己看一看究竟有啥规律。<br>此外，<strong>海明码采用的是奇偶校验的方式进行校验</strong>，所谓奇偶校验是啥呢？比如说C8负责校验的这几位，奇校验就是这几位再加上C8本身这些数中的1加起来的数量是奇数。同理偶校验就是1的个数加起来是偶数。这个就很好理解了。<br>接下来，我们来实际做一个例子。</p>
+<ul>
+<li><strong>有二进制数1001，要求使用奇校验方式生成海明码。</strong></li>
+</ul>
+<p>乍看好像没啥思路，但是我们可以凭着感觉，从1的个数是奇数作为出发点。首先来确定校验位的个数，由公式2^k &gt;= n+k+1可以计算出校验位的个数为3，即1、2、4位，其余为则为真正的数据位1001，如下图所示：<br><img src="https://raw.githubusercontent.com/roobtyan/BlogPictures/master/computer_associated/%E5%A5%87%E6%A0%A1%E9%AA%8C1.PNG"></p>
+<p>再由C1校验的是1、3、5、7位，则共有两个1，为了满足奇校验的条件，则C1=1。<br>C2的校验位为2、3、5、7位，则共有两个1，为了满足奇校验的条件，则C2=1。<br>C4的校验位为4、5、6、7位，则共有1个1，则C4=0.<br>所以，奇校验的海明码就是1110001。</p>
+<p>海明码存在的意义就是为了纠错，所以，他的重要意义在于纠错的过程。</p>
+<ul>
+<li><strong>有这样一串海明码，0100111，已知是按照偶校验的原则，找出出错的位。</strong></li>
+</ul>
+<p>这个题目复杂在如果有一位出错，那么很有可能会造成C1、C2、C4校验位的1的个数均不是偶数，所以确定起来比较麻烦，我们来看看这究竟是如何解决的。<br>我们按照之前的校验位原则再列出一张表格：<br><img src="https://github.com/roobtyan/BlogPictures/raw/master/computer_associated/%E7%BA%A0%E9%94%99.PNG"></p>
+<p>可以看到，在表格中，C1、C2校验位中的1的个数均为奇数，而C4中的1为偶数个，所以出错肯定是在c1、c2的公共部分。所以确定是第3位出错，则将第三位纠正为0，即原来传输的数据是0101。<br>以上就是海明码的全部内容，接下来介绍CRC循环冗余校验方法。</p>
+<h3 id="循环冗余校验码（CRC）"><a href="#循环冗余校验码（CRC）" class="headerlink" title="循环冗余校验码（CRC）"></a>循环冗余校验码（CRC）</h3><p>CRC一般用于磁盘上的数据校验。同时，CRC还应用在计算机网络数据传输过程中的数据校验。<br>CRC是基于模2运算的校验码。<br>CRC码是由两部分组成，前部分是信息码，就是需要校验的信息，后部分是校验码，如果CRC码共长n个bit，信息码长k个bit，就称为（n,k）码。编码规则如下：</p>
+<ul>
+<li>首先将数据位向左移动l位，则右面空出l个数据位。此时共有n位数据，n=l+k。</li>
+<li>运用一个生成多项式g(x)（也可看成二进制数）用模2除上面的式子，得到的余数就是校验码。</li>
+</ul>
+<p>实际上，生成多项式是国际上制定的标准，有很多，下面举几个例子：<br>x^16+ x^12+ x^5+1、x^16+ x^15+ x^2+1、 x^4+ x^3 +x^2+1。<br>上面的g（x）则还可以堪称二进制数，比如说x^4+ x^3 +x^2+1 （从左向右，取出系数）就是11101（因为x^1没有，则为0）。</p>
+<ul>
+<li><strong>信息码是110，则求CRC码</strong></li>
+</ul>
+<p>先将110向左移动4位，则为1100000。用11101|1100000（模2运算），最终的结果就是1001，则传输码为110,1100000。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>本文详细的介绍了海明码，另外一种CRC校验实际上只是一笔带过，在计算机网络系列文章中我们会详细介绍， 敬请期待。</p>
+<p>如果你喜欢我的文章，请帮忙点赞；如果你对本文内容存在疑问，请留言告诉我。您的点赞和留言是对原创作者的最大支持，感谢您的阅读。<br>此外，本人一直在寻找志同道合的小伙伴，同样如此的可以邮件联系我：<a href="mailto:&#x72;&#111;&#111;&#98;&#116;&#121;&#97;&#110;&#x40;&#111;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#46;&#99;&#111;&#x6d;">&#x72;&#111;&#111;&#98;&#116;&#121;&#97;&#110;&#x40;&#111;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#46;&#99;&#111;&#x6d;</a>.<br>微信公众号：<strong>最高权限比特流</strong>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag"># 计算机组成原理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E4%BA%94%EF%BC%89%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%AD%98%E5%82%A8%E5%99%A8/" rel="prev" title="漫谈计算机组成原理（五）高速缓冲存储器">
+                  <i class="fa fa-chevron-left"></i> 漫谈计算机组成原理（五）高速缓冲存储器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B8%AD%E6%96%AD%E7%B3%BB%E7%BB%9F/" rel="next" title="漫谈计算机组成原理（十一）中断系统">
+                  漫谈计算机组成原理（十一）中断系统 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UCAS ROOBTYAN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

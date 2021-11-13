@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="c404671c98baec6e04e353a0f32423fa">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言：Spring核心系列文章本文并非教程一类的文章，而是偏向于Spring底层，适合有一定框架编程经验的同学阅读。在这个系列的文章中，我会融合同学们在面试中常见的问题，如什么是IOC容器，遇到重要的，我可能还会以源代码的形式展现相应的内容，这样一问一答的形式，帮助同学们缕清Spring的重要知识点。由于本人能力有限，在行文的过程中可能会出现一些错误，请各位同学、大佬不吝赐教，共同学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringIOC">
+<meta property="og:url" content="http://example.com/2021/11/13/SpringIOC/index.html">
+<meta property="og:site_name" content="默默无闻贤鱼言">
+<meta property="og:description" content="前言：Spring核心系列文章本文并非教程一类的文章，而是偏向于Spring底层，适合有一定框架编程经验的同学阅读。在这个系列的文章中，我会融合同学们在面试中常见的问题，如什么是IOC容器，遇到重要的，我可能还会以源代码的形式展现相应的内容，这样一问一答的形式，帮助同学们缕清Spring的重要知识点。由于本人能力有限，在行文的过程中可能会出现一些错误，请各位同学、大佬不吝赐教，共同学习。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-13T04:47:29.379Z">
+<meta property="article:modified_time" content="2021-11-09T04:43:20.320Z">
+<meta property="article:author" content="ROOBTYAN">
+<meta property="article:tag" content="JavaWeb">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/13/SpringIOC/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/13/SpringIOC/","path":"2021/11/13/SpringIOC/","title":"SpringIOC"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringIOC | 默默无闻贤鱼言</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">默默无闻贤鱼言</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">多啦没A梦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-计划"><a href="/plan/" rel="section"><i class="fa fa-calendar fa-fw"></i>计划</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9ASpring%E6%A0%B8%E5%BF%83%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">前言：Spring核心系列文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">2.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">控制反转和依赖注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q%EF%BC%9AIOC%E5%AE%B9%E5%99%A8%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E7%8E%A9%E6%84%8F%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">Q：IOC容器是个什么玩意？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ROOBTYAN"
+      src="/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">ROOBTYAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:roobtyan@outlook.com" title="E-Mail → mailto:roobtyan@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/SpringIOC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringIOC
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:20" itemprop="dateModified" datetime="2021-11-09T12:43:20+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言：Spring核心系列文章"><a href="#前言：Spring核心系列文章" class="headerlink" title="前言：Spring核心系列文章"></a>前言：Spring核心系列文章</h1><p>本文并非教程一类的文章，而是偏向于Spring底层，适合有一定框架编程经验的同学阅读。在这个系列的文章中，我会融合同学们在面试中常见的问题，如什么是IOC容器，遇到重要的，我可能还会以源代码的形式展现相应的内容，这样一问一答的形式，帮助同学们缕清Spring的重要知识点。由于本人能力有限，在行文的过程中可能会出现一些错误，请各位同学、大佬不吝赐教，共同学习。</p>
+<span id="more"></span>
+
+<h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><p>先回顾一下Spring的基础内容。<br><strong>Q：请问什么是Spring？</strong><br>A：Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。Spring可以让我们从“plain old Java objects”（POJO）中构建应用程序和通过非侵入性的POJO实现企业应用服务。（关于这一点，如果你比较熟悉Spring的话，会感受到的。在Spring的项目中，我们无需自己new一个对象或者使用工厂模式生成一个对象，只需要将对象交给Spring管理，就能实现调用对象的操作。）</p>
+<p>经过十多年的发展，我们还是先来回顾一下Spring的整体架构，熟悉这个架构后，你将会对我后面的文章结构了然于心，高屋建瓴。<br><img src=""></p>
+<p>通过上图我们能够发现，SpringIOC在Spring的整体架构之中处于最底层，也就是说，SpringIOC是Spring的重中之重，所有的一切，都是建立在IOC这个地基之上的，没有IOC，Spring的其他模块也不能开花结果。所以，在第一讲中，我们将会深入的探讨一下IOC。</p>
+<h1 id="控制反转和依赖注入"><a href="#控制反转和依赖注入" class="headerlink" title="控制反转和依赖注入"></a>控制反转和依赖注入</h1><p><strong>Q:什么是控制反转？什么是依赖注入？</strong><br>所谓的控制反转，就是我们刚才说的Spring的核心——IOC。这个词，很多书籍上解释的非常麻烦，初学者很容易发懵。<br>从“控制反转”这个词入手：先问一个问题，什么是控制？什么是反转呢？回想一下，我们最初学习Java的时候，必须自己去new一个对象，才能拿来使用，在这里面，“我们”是类的控制者。控制反转的意思是我们从控制者成为了使用者，更简单的解释是“<strong>我们把对象的创建的权利交给（反转）给Spring</strong>”。<br>《Spring4.x实战》一书中写的是“某一接口具体实现类的选择控制权从调用类中移除，转交给第三方决定，即由Spring容器借助Bean的配置来进行控制”。虽然解释的很专业，但是可能大家看起来就有点懵逼了。</p>
+<p>依赖注入（DI），依赖注入的前提是有IOC环境，调用类中有某个类（成员变量、成员属性），Spring管理的类可以直接注入（设置）到这个属性之中。一般来说，依赖注入有三种形式：</p>
+<ul>
+<li>构造器注入</li>
+<li>Setter方法注入</li>
+<li>接口注入</li>
+</ul>
+<p>Spring中能使用前两种的注入方法。什么意思呢？从下面这段代码中你就能够简单的了解一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private ParentService parentService;</span><br><span class="line">private UsersService usersService;</span><br><span class="line">private ParentContactService parentContactService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Autowired</span><br><span class="line">public ParentController(ParentService parentService, UsersService usersService, ParentContactService parentContactService) &#123;</span><br><span class="line">    this.parentService = parentService;</span><br><span class="line">    this.usersService = usersService;</span><br><span class="line">    this.parentContactService = parentContactService;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大家不用管我这些类都是些什么东西，主要是看方法，上面表示的就是构造器注入的这种方法，当然我们使用的是注解的方式注入类。<br>在Spring中管理着parentService、usersService、parentContactService，这就叫做控制反转，而我们的注解和构造函数起到的作用就是依赖注入，Setter注入也是类似，就是使用set方法进行注入而已，并不像某些书籍介绍的那样繁琐。</p>
+<h1 id="Q：IOC容器是个什么玩意？"><a href="#Q：IOC容器是个什么玩意？" class="headerlink" title="Q：IOC容器是个什么玩意？"></a>Q：IOC容器是个什么玩意？</h1><p>如果你使用过工厂模式，就会发现，其实Spring的底层就有类似于我们写的工厂模式那样的东西。通过Bean工厂和反射机制，Spring可以就可以很方便的创建某个类，然后通过依赖注入就可以提供给我们。可以将IOC容器理解为一个创建Bean的工具和Bean的集合容器。<br>如果你不了解Bean工厂也没有关系，下一讲中，我们将会讲述工厂模式以及Spring中的两个重量级工厂：BeanFactory和ApplicationContext。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>感谢你的阅读，如果你喜欢我的文章，欢迎关注我的微信公众号：最高权限比特流。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/13/Springboot%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91/" rel="prev" title="Springboot整合开发">
+                  <i class="fa fa-chevron-left"></i> Springboot整合开发
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/13/Spring%E4%B8%AD%E7%9A%84%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" rel="next" title="Spring中的工厂模式">
+                  Spring中的工厂模式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UCAS ROOBTYAN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="c404671c98baec6e04e353a0f32423fa">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言说起来还是比较有意思的，最近一个同学问我SSM（Spring+SpringMVC+Mybatis）整合开发，整体的思路和配置究竟是怎么个思路。这不禁让我想起了我一开始做SSM整合开发的苦逼时间。本以为不就是个框架吗，有啥难的。但后来真的发现自己动手做起来真的很不简单，尤其是对于新手同学来说。于是我想，百度一下肯定是能够找到整合开发的例子吧。不幸的是，这些教程看起来很高大上，但是实际操作起来，不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring+SpringMVC+Mybatis整合及配置详解（一）">
+<meta property="og:url" content="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/index.html">
+<meta property="og:site_name" content="默默无闻贤鱼言">
+<meta property="og:description" content="前言说起来还是比较有意思的，最近一个同学问我SSM（Spring+SpringMVC+Mybatis）整合开发，整体的思路和配置究竟是怎么个思路。这不禁让我想起了我一开始做SSM整合开发的苦逼时间。本以为不就是个框架吗，有啥难的。但后来真的发现自己动手做起来真的很不简单，尤其是对于新手同学来说。于是我想，百度一下肯定是能够找到整合开发的例子吧。不幸的是，这些教程看起来很高大上，但是实际操作起来，不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/roobtyan/BlogPictures/blob/master/SSM/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.PNG?raw=true">
+<meta property="og:image" content="https://github.com/roobtyan/BlogPictures/blob/master/SSM/SSM%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91.PNG?raw=true">
+<meta property="article:published_time" content="2021-11-13T04:47:29.369Z">
+<meta property="article:modified_time" content="2021-11-09T04:43:09.503Z">
+<meta property="article:author" content="ROOBTYAN">
+<meta property="article:tag" content="JavaWeb">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/roobtyan/BlogPictures/blob/master/SSM/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.PNG?raw=true">
+
+
+<link rel="canonical" href="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/","path":"2021/11/13/Spring+SpringMVC+Mybatis整合及配置详解（通过源码）/","title":"Spring+SpringMVC+Mybatis整合及配置详解（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring+SpringMVC+Mybatis整合及配置详解（一） | 默默无闻贤鱼言</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">默默无闻贤鱼言</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">多啦没A梦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-计划"><a href="/plan/" rel="section"><i class="fa fa-calendar fa-fw"></i>计划</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">回顾内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B4%E5%90%88%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">整合的整体架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Maven依赖管理</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ROOBTYAN"
+      src="/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">ROOBTYAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:roobtyan@outlook.com" title="E-Mail → mailto:roobtyan@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring+SpringMVC+Mybatis整合及配置详解（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:09" itemprop="dateModified" datetime="2021-11-09T12:43:09+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>说起来还是比较有意思的，最近一个同学问我SSM（Spring+SpringMVC+Mybatis）整合开发，整体的思路和配置究竟是怎么个思路。这不禁让我想起了我一开始做SSM整合开发的苦逼时间。本以为不就是个框架吗，有啥难的。但后来真的发现自己动手做起来真的很不简单，尤其是对于新手同学来说。<br>于是我想，百度一下肯定是能够找到整合开发的例子吧。不幸的是，这些教程看起来很高大上，但是实际操作起来，不是缺包就是配置文件本身存在问题，再有就是代码根本就没有贴全。除了这些问题，仅有少数能够配置成功的文章，更是根本连配置信息、代码的解释都没有……<br>我心想，算了，还是自己手动撸一篇文章吧。于是，就有了接下来的这些内容。<br>本文，<strong>主要是针对已经学过Spring，了解SpringMVC和Mybatis的同学。</strong>如果这些还暂时不了解，没关系，先去找些视频或者书籍看看SSM的相关知识再来（笑）。<br><strong>我们以一个小型的项目作为依托</strong>，<strong>先介绍此项目的整体架构和用到的技术，并让你知道每个部分的作用；接着，我将介绍引入的jar文件（Maven），并带你大致了解一下Maven是个啥；接着就是配置文件，我将详细介绍配置文件的作用，以及为啥这样配置；最后，我们将实现一个查询的小功能。</strong><br>这个文章将分成两篇，因为比较长，希望大家多谢耐心。<br>废话不多说，开始吧！</p>
+<span id="more"></span>
+
+<h1 id="回顾内容"><a href="#回顾内容" class="headerlink" title="回顾内容"></a>回顾内容</h1><p>这小节，主要带你回顾下整合开发遵循的模式以及SSM三框架在其中的身份。<br><strong>1）MVC开发模式：</strong>你肯定知道，现在的B/S系统大多都是遵从MVC的开发模式开发的。M就是Model，模型层，负责数据的存储，就是代码中的类，最早的时候必须符合JavaBean的规范；V就是View，视图层，负责信息的展示，就是用户看到的应用页面；C就是Controller，控制器，这一层做的主要是逻辑层的操作，比如用户登录的后台代码，当然现在的逻辑层，在开发的过程中是由dao、service和controller共同组成的。<br><strong>2）SSM这三者的作用分别是什么呢？</strong><br>以前我一直天真的认为，SSM这三者的作用大致上应该是对应着MVC的，但是我错了，而且还错的离谱。这么说虽然有一定的依据，但是真的不准确。</p>
+<ul>
+<li>Spring，实际上是一个Bean（各种类都能称为Bean）的超级大工厂，只要是代码中哪里需要用到某个类，直接和Spring要就可以了。而以前我们只能用到哪个类就new一个，或者通过工厂模式。实际上这个大工厂被我们称作IOC（依赖注入），就是生成类的某种方式，这大大降低了代码的耦合性。这里就能看到，硬说Spring是M层的也没啥毛病，但是Spring不但管理着以前的JavaBean，同样还管理着Dao层的类，这就有一些不一样了。关于这一点，我们后面的文章会说明。</li>
+<li>SpringMVC，说SpringMVC是视图层的，这是肯定的。如果你用过Servlet+JSP的开发模式，你一定非常清楚，想要在一个JSP页面中绑定数据（数据显示在页面中），实际上是非常困难的，需要通过request的setAttribute方法，然后JSP页面上再来一个request.id之类的东西，总之非常不方便。还有就是Controller接收参数，如果要接收参数的话，Servlet的开发只能在get或者post方法中写参数的名字。如果参数非常多，可想而知，这得多么复杂。SpringMVC就非常简单了，如果我们想要接收很多参数的话，直接就能把这些参数封装在一个类中，把类放到参数的位置就好了，SpringMVC就会自动帮助我们完成参数接收的过程，非常方便。实际上，在这个过程中，依然有Spring框架中IOC模块的支持。</li>
+<li>Mybatis，同样的，mybatis只能算作是Controller层中的一部分，即dao。dao也叫做持久层，作用就是将数据持久化到数据库之类的东西里面，也就是ORM框架。Mybatis非常好用，以前我们做开发的时候，一般都是写JSBC，就算不直接用JDBC，还是会用DBUtils之类的数据库组件，但是这些组件并不灵活，稍微有些问题就无法读取或写入数据到数据库。Mybatis的出现大大解决了这个问题。同样作用的框架还有Hibernate，但是它和Mybatis相比就太臃肿了（Spring同样可以整合Hibernate）。</li>
+</ul>
+<p>好了，下面我们就来看看这三大框架究竟是如何无缝的组合在一起的吧。</p>
+<h1 id="整合的整体架构"><a href="#整合的整体架构" class="headerlink" title="整合的整体架构"></a>整合的整体架构</h1><p>我们先来说一下项目的目录结构。<br><img src="https://github.com/roobtyan/BlogPictures/blob/master/SSM/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.PNG?raw=true"></p>
+<p>在这个小的web项目中，大的目录分成了java、resources、webapp三部分。</p>
+<ul>
+<li>java中有bean，这个目录是存放和数据库对应的基本类的；controller，这里面是存放控制器类的，这就类似于之前Servlet的作用；dao，这是存放数据库映射文件的，功能和之前的JDBC相同，最后是service，服务层，controller负责处理逻辑操作，service负责的是和dao层交互，实现具体的功能，比如插入一条数据之类的。</li>
+<li>resources，资源路径，多数的配置文件和Mybatis的映射文件都放在这里，具体的作用在后面就会见分晓了。</li>
+<li>webapp，这里面的内容和之前的开发一样，只是多出来一个SpringMVC的配置文件</li>
+</ul>
+<p>知道了上面目录结构的功能，就能看下面这张结构图了：<br><img src="https://github.com/roobtyan/BlogPictures/blob/master/SSM/SSM%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91.PNG?raw=true"></p>
+<p>我们将整体的结构分成了五个部分，分别是前端页面、Spring容器、数据库连接池、数据库（这两部分其实可以合成一部分）、Maven依赖管理。<br>完成一个web请求的个过程大致如下：</p>
+<ul>
+<li>前端页面发起一个http请求：localhost:8080/user</li>
+<li>http请求被Tomcat服务器得到，接着到Servlet中寻找映射路径，当然有了SpringMVC就无需去执行复杂的配置了，我们可以像Servlet3.0那样使用注解开发，SpringMVC前端控制器的注解是@RequestMapping（”/user”），通过请求的url，寻找映射路径，找到对应Controller类的方法</li>
+<li>在Controller中，注入了诸多的Service，Controller可以直接调用这些service进行操作</li>
+<li>controller调用Service后，Service就要执行对应的方法，在Service中同样注入了dao层的mapper，即可调用相应的mapper方法执行数据库操作</li>
+<li>mybatis中，dao层分成两部分，分别是接口和mapper映射文件，调用mapper接口方法的时候，就会去找到对应方法的映射，这些映射就是执行数据库操作的语句，本质上还是sql语句</li>
+<li>此项目肯定是有很多的依赖文件的，比如springframwork，现在有了Maven就不需要我们手动导入了，只需要在Maven中配置即可。</li>
+<li>完成controller操作以后，再通过SpringMVC前端控制器控制页面跳转或者重定向之类的操作，但是现在一般使用ajax技术，提高前端页面的性能。</li>
+</ul>
+<p>整个请求过程经历的各个模块，我想我已经说的很清楚了。其中最为核心的是Spring，Spring管理着这些类，供其他类完成依赖注入。</p>
+<h1 id="Maven依赖管理"><a href="#Maven依赖管理" class="headerlink" title="Maven依赖管理"></a>Maven依赖管理</h1><p>我们之前开发的时候，是需要手动的将一个个的类导入到我们的工作空间中，然后才能进行正常的代码编写。尽管如此，有时候还是会出现一些诸如ClassNotFountException之类的异常。<br>Maven的出现改变了这种情况，我们只需要配置文件，就能够很方便的将jar文件导入到我们的工作空间中，同时还能够实现将项目打成war包的操作，更加简便了我们的开发。<br>其实Maven的配置文件的核心就一个（个人认为），即三坐标。那么，三坐标是什么呢？我们来简单的看一段Maven的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">	&lt;!-- 数据库连接池、驱动 --&gt;</span><br><span class="line">    &lt;!-- https://mvnrepository.com/artifact/c3p0/c3p0 --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;c3p0&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;c3p0&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;0.9.1&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>这里我们引入的jar文件就是C3P0数据库连接池文件，可以看到，所谓的三坐标就是groupId、artifactId、version。如果我们需要引入一个jar文件，只需要去Maven中央仓库搜索，就能够找到对应的三坐标啦。<br>Maven我们就说这么多，过多的细节就不在这里展开讲了，欢迎大家关注后续的文章。<br>这篇文章就到这里，下篇文章将开始展开配置文件的讲解，敬请期待！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="Spring+SpringMVC+Mybatis整合及配置详解（二）">
+                  <i class="fa fa-chevron-left"></i> Spring+SpringMVC+Mybatis整合及配置详解（二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/13/Springboot%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91/" rel="next" title="Springboot整合开发">
+                  Springboot整合开发 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UCAS ROOBTYAN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

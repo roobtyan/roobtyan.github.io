@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="c404671c98baec6e04e353a0f32423fa">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本文讲什么？浮点数和定点数一样，都是计算机中数据的存储形式。定点数我们可以理解成纯小数或者纯整数，但是实际上在计算机中参与运算的数字并非都是定点数。比如，有些数据过大，比如2^100^这样的数据，如果写成二进制的形式，寄存器肯定是无法放下的。于是就有了浮点数这种数据。本文主要讲述浮点数的概念、浮点数的规格化，以及浮点数的各种运算。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="漫谈计算机组成原理（十）浮点数及浮点数的运算">
+<meta property="og:url" content="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%8D%81%EF%BC%89%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8F%8A%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="默默无闻贤鱼言">
+<meta property="og:description" content="本文讲什么？浮点数和定点数一样，都是计算机中数据的存储形式。定点数我们可以理解成纯小数或者纯整数，但是实际上在计算机中参与运算的数字并非都是定点数。比如，有些数据过大，比如2^100^这样的数据，如果写成二进制的形式，寄存器肯定是无法放下的。于是就有了浮点数这种数据。本文主要讲述浮点数的概念、浮点数的规格化，以及浮点数的各种运算。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA.PNG?raw=true">
+<meta property="og:image" content="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E8%8C%83%E5%9B%B4.PNG?raw=true">
+<meta property="article:published_time" content="2021-11-13T04:47:29.468Z">
+<meta property="article:modified_time" content="2021-11-09T04:42:14.282Z">
+<meta property="article:author" content="ROOBTYAN">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA.PNG?raw=true">
+
+
+<link rel="canonical" href="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%8D%81%EF%BC%89%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8F%8A%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%8D%81%EF%BC%89%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8F%8A%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97/","path":"2021/11/13/漫谈计算机组成原理（十）浮点数及浮点数的运算/","title":"漫谈计算机组成原理（十）浮点数及浮点数的运算"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>漫谈计算机组成原理（十）浮点数及浮点数的运算 | 默默无闻贤鱼言</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">默默无闻贤鱼言</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">多啦没A梦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-计划"><a href="/plan/" rel="section"><i class="fa fa-calendar fa-fw"></i>计划</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E8%AE%B2%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">本文讲什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">浮点数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">浮点数的运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E5%8A%A0%E5%87%8F%E6%B3%95%E8%BF%90%E7%AE%97"><span class="nav-number">3.0.1.</span> <span class="nav-text">浮点数的加减法运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E4%B9%98%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="nav-number">3.0.2.</span> <span class="nav-text">浮点数的乘除法运算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ROOBTYAN"
+      src="/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">ROOBTYAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:roobtyan@outlook.com" title="E-Mail → mailto:roobtyan@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%8D%81%EF%BC%89%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8F%8A%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          漫谈计算机组成原理（十）浮点数及浮点数的运算
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:14" itemprop="dateModified" datetime="2021-11-09T12:42:14+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="本文讲什么？"><a href="#本文讲什么？" class="headerlink" title="本文讲什么？"></a>本文讲什么？</h1><p>浮点数和定点数一样，都是计算机中数据的存储形式。定点数我们可以理解成纯小数或者纯整数，但是实际上在计算机中参与运算的数字并非都是定点数。比如，有些数据过大，比如2^100^这样的数据，如果写成二进制的形式，寄存器肯定是无法放下的。于是就有了浮点数这种数据。<br><strong>本文主要讲述浮点数的概念、浮点数的规格化，以及浮点数的各种运算。</strong></p>
+<span id="more"></span>
+
+<h1 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h1><p>所谓浮点数，就是小数点的位置会改变的数字。什么情况下小数点会发生改变呢？比如下面这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">22.101 = 0.22101 * 10^2 = 0.022101 * 10^3（注意，此处的数据都是十进制的）</span><br></pre></td></tr></table></figure>
+<p>上面的22.101的小数点的位置之所以会发生变化，究其原因不过是乘以了10的对应次方。根据我们以前学过的内容，10同样可以换成其他的数字，比如2，相应的幂次也会发生变化。我们称这个10或者2为<strong>基数</strong>，基数的幂次为<strong>阶码</strong>；而小数点不断变化的数称作尾数。再看一个数字：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">11.0101(2) = 0.110101*2^10 = 0.0110101*2^11（格式：【尾数符号|尾数|阶码符号|阶码】）</span><br></pre></td></tr></table></figure>
+<p>注意啊，上面的数字全部都是二进制的，包括基数和阶码。一开始我看这个数字是懵逼的，因为我就是搞不明白为啥0.110101<em>2^3^ = 0.110101</em>2^11^，后来才明白，原来11是3的二进制形式，这块千万要看好，我就被坑了。</p>
+<p><em><strong>浮点数在计算机中的表现形式：</strong></em>和上面我给出的格式略有不同，因为上面的那种形式是我用来给大家解释说明的。而下面这种格式才是真正存储在计算机中的格式。<br><img src="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA.PNG?raw=true" alt="浮点数的表示格式"></p>
+<p><em><strong>浮点数的表示范围：</strong></em>就像我们之前说过的定点数，同样有其表示的范围，浮点数也是一样，同样有表示范围，如果一个数字超过了这个表示范围，则称为溢出。表示范围如下图：<br><img src="https://github.com/roobtyan/BlogPictures/blob/master/computer_associated/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E8%8C%83%E5%9B%B4.PNG?raw=true" alt="浮点数的表示范围"></p>
+<p>浮点数有上溢区和下溢区之分，当浮点数的阶码大于最大阶码时，称为上溢，此时机器停止运算，进行溢出中断处理；如果阶码小于最小的阶码时，称为下溢， 此时溢出的数值非常小，直接强制将浮点数的尾数置为0，可以继续执行运算。</p>
+<p><em><strong>浮点数的规格化：</strong></em>其实浮点数的规格化没什么好说的，基本上是和我们当年学的科学计数法是一个样子的。我们就说一下基数为2的规格化方式：<strong>基数为2时，尾数最高为1的数规格化数。规格化时，尾数左移一位，阶码减1；尾数右移一位，阶码加1。当尾数小于等于1的时候，规格化就完成了。</strong><br>我们来看看如何将一个数规格化成浮点数（包括其原码、反码、补码）：</p>
+<ul>
+<li><strong>例子：设浮点数字长为16位，其中阶码5位，尾数11位，令x=-54，请将其规格化为基数为2的浮点数</strong><br>1）先将-54转换为二进制形式：-110110<br>2）规格化得到-（0.1101100000）* 2^110^<br>3）得到在浮点机中的结果：[x]<del>原</del> = 0.0110；1.1101100000，[x]<del>补</del>=0.0110；1.0010100000，[x]<del>反</del>=0.0110；1.0010011111.</li>
+</ul>
+<h1 id="浮点数的运算"><a href="#浮点数的运算" class="headerlink" title="浮点数的运算"></a>浮点数的运算</h1><p>从上面的介绍中能够知道，在计算机中，浮点数都能够表示成** 尾数（乘）基数 ^阶码^**的这种形式，这就给浮点数的四则运算带来了巨大的便利。</p>
+<h3 id="浮点数的加减法运算"><a href="#浮点数的加减法运算" class="headerlink" title="浮点数的加减法运算"></a>浮点数的加减法运算</h3><p>浮点数的加法非常简单，只需要记住下面的这几个步骤就能够准确的运算：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1）对阶，使得两数的小数点位置对齐。</span><br><span class="line">2）尾数求和，将对阶后的两个尾数按照定点的加减法运算规则计算。</span><br><span class="line">3）规格化，为增加有效数字的位数，提高运算精度，必须将求和（差）后的尾数规格化</span><br><span class="line">4）舍入，为提高精度，要考虑尾数右移时候丢失的数值位</span><br><span class="line">5）溢出判断，判断计算结果是否存在溢出</span><br></pre></td></tr></table></figure>
+<p>因为浮点数的加法比较简单，我们就不给出具体的例子了，我只是强调几点。</p>
+<ul>
+<li>所谓的对阶，就是对阶码进行运算。我们让两个阶码做减法，判断哪个阶码更大，谁大就向谁看齐。同时，两个阶码差几就让对应的尾数向左或者向右移动几位，使得阶码之间的差值为0.</li>
+<li>尾数求和就是两个尾数相加，这个没什么好说的，按照定点的运算就可以了。</li>
+<li>尾数计算完毕后，需要规格化。<br>因为在上面我们讲了浮点数的表示范围，当基数为2的时候，规格化数s的绝对值应该属于[1/2,1)之间，所以当s&lt;0的时候，补码规格化形式为00.1xxxxx，而s&gt;0的时候，补码规格化形式为11.0xxxx。 所以，尾数的最高数值位和符号位不同的时候，就存在两种可能的情况。</li>
+</ul>
+<p>这就导致当规格化数小于0的时候，规格化有两种方式。</p>
+<h3 id="浮点数的乘除法运算"><a href="#浮点数的乘除法运算" class="headerlink" title="浮点数的乘除法运算"></a>浮点数的乘除法运算</h3><p>浮点数的乘除法运算其实也是基于加减运算的。<br>运算步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1)阶码相加减:按照定点整数的加减法运算方法对两个浮点数的阶码进行加减运算。</span><br><span class="line"></span><br><span class="line">2)尾数相乘或相除:按照定点小数的阵列乘除法运算方法对两个浮点数的尾数进行乘除运算。为了保证尾数相除时商的正确性，必须保证被除数尾数的绝对值一定小于除数尾数的绝对值。若被除数尾数的绝对值大于除数尾数的绝对值，需对被除数进行调整，即被除数的尾数每右移1位，阶码加1，直到被除数尾数的绝对值小于除数尾数的绝对值。</span><br><span class="line"></span><br><span class="line">3)结果规格化并进行舍入处理:浮点数乘除运算结果的规格化和舍入处理与浮点数加减运算结果的规格化和舍入处理方法相同。并且在浮点数乘除运算的结果中，由于乘积和商的绝对值一定小于1，因此在浮点乘除运算结果进行规格化处理时只存在向左规格化，不可能出现向右规格化。</span><br><span class="line"></span><br><span class="line">4)判断溢出:浮点数乘除运算结果的尾数不可能发生溢出，而浮点数运算结果的溢出则根据运算结果中浮点数的阶码来确定，溢出的判定和处理方法与浮点加减运算完全相同。</span><br></pre></td></tr></table></figure>
+<p>例子像下面这样：</p>
+<ul>
+<li>例子：<strong>设两浮点数x=2－001×(-0.100010)，y=2－100×(0.010110)，求x*y</strong><br>[x]<del>浮</del>=11111，1.011110  [y]<del>浮</del>=11100，0.010110</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1）阶码相加</span><br><span class="line">[Ex+Ey]补=[Ex]补+[Ey]补=11111+11100=11011</span><br><span class="line"></span><br><span class="line">2)尾数作直接补码阵列乘法运算</span><br><span class="line">[Mx]补×[My]补=1.110100010100</span><br><span class="line"></span><br><span class="line">3)结果规格化并进行舍入处理</span><br><span class="line">积的尾数左移2位，阶码减2，采用“0舍1入”法进行舍入处理后，得</span><br><span class="line">[x×y]浮=11001，1.010001</span><br><span class="line"></span><br><span class="line">4)判断溢出</span><br><span class="line">乘积的阶码的双符号位相同，故乘积无溢出。</span><br><span class="line">所以x×y=2－111×(-0.101111)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>至此，计算机运算方法这一章节就算是完成了，大家如果有问题可以私信、留言。<br>如果你喜欢我的文章，欢迎关注我的微信公众号：<strong>最高权限比特流</strong></p>
+<p><strong>参考：</strong><br><strong>《计算机组成原理》唐朔飞</strong><br><strong>博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xingqingly/article/details/18981671">https://blog.csdn.net/xingqingly/article/details/18981671</a></strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag"># 计算机组成原理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B8%AD%E6%96%AD%E7%B3%BB%E7%BB%9F/" rel="prev" title="漫谈计算机组成原理（十一）中断系统">
+                  <i class="fa fa-chevron-left"></i> 漫谈计算机组成原理（十一）中断系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/13/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" rel="next" title="网络文学的前世今生">
+                  网络文学的前世今生 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UCAS ROOBTYAN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

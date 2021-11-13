@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="c404671c98baec6e04e353a0f32423fa">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="默默无闻贤鱼言">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="默默无闻贤鱼言">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="ROOBTYAN">
+<meta property="article:tag" content="C++, Blog, 操作系统, CPU, 数字IC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>默默无闻贤鱼言</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">默默无闻贤鱼言</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">多啦没A梦</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-计划"><a href="/plan/" rel="section"><i class="fa fa-calendar fa-fw"></i>计划</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ROOBTYAN"
+      src="/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">ROOBTYAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:roobtyan@outlook.com" title="E-Mail → mailto:roobtyan@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E6%88%91%E7%BC%BA%E7%9A%84%E6%98%AF%E6%8E%A8%E8%8D%90%E5%90%97%EF%BC%9F%EF%BC%81%E6%88%91%E7%BC%BA%E7%9A%84%E6%98%AF%E5%A5%B3%E6%9C%8B%E5%8F%8B%EF%BC%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/%E6%88%91%E7%BC%BA%E7%9A%84%E6%98%AF%E6%8E%A8%E8%8D%90%E5%90%97%EF%BC%9F%EF%BC%81%E6%88%91%E7%BC%BA%E7%9A%84%E6%98%AF%E5%A5%B3%E6%9C%8B%E5%8F%8B%EF%BC%81/" class="post-title-link" itemprop="url">我缺的是推荐吗？！我缺的是女朋友！</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:43" itemprop="dateModified" datetime="2021-11-09T12:42:43+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>某天，正沉迷于敲代码无法自拔的我，突然接到女朋友的电话。</p>
+<p>“言小胖，干嘛呢？”</p>
+<p>“亲，您所拨打的用户正在写代码，请等待Bug调试完毕后再拨。”</p>
+<p>“言小胖，你再皮！”</p>
+<p>我听着这平静的声音，心里暗道不妙，我犯了一个致命的错误：Bug重要还是女朋友重要？</p>
+<p>emm，那还用说，当然是Bug重要，调不出Bug，我寝食难安啊。</p>
+<p>机智的我决定——一言不发。</p>
+<p>果然，还是她先沉不住气了。</p>
+<p>“马上出来，陪我去取快递！”</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/%E6%88%91%E7%BC%BA%E7%9A%84%E6%98%AF%E6%8E%A8%E8%8D%90%E5%90%97%EF%BC%9F%EF%BC%81%E6%88%91%E7%BC%BA%E7%9A%84%E6%98%AF%E5%A5%B3%E6%9C%8B%E5%8F%8B%EF%BC%81/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E6%88%91%E5%96%9C%E6%AC%A2%E4%B8%80%E4%B8%AA%E5%A7%91%E5%A8%98%EF%BC%8C%E5%A5%B9%E5%8F%AB%E2%80%9C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/%E6%88%91%E5%96%9C%E6%AC%A2%E4%B8%80%E4%B8%AA%E5%A7%91%E5%A8%98%EF%BC%8C%E5%A5%B9%E5%8F%AB%E2%80%9C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%9D/" class="post-title-link" itemprop="url">我喜欢一个姑娘，她叫“操作系统”</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:47" itemprop="dateModified" datetime="2021-11-09T12:42:47+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>我叫Java，生活在计算机世界的“编程语言”层。</p>
+<p>什么？</p>
+<p>你说我的名字有些怪？听起来像咖啡？</p>
+<p>好吧，我承认，也许是因为我长得太像咖啡了吧……</p>
+<p>其实你可能不知道，以前我叫Oak，我特别喜欢这个名字。可是后来我老爹高斯林发现，已经有人叫这个名字了，所以我被迫改名成Java。</p>
+<p>但我一点也不喜欢咖啡，它太苦了，即便加了糖，也难以遮掩它原本的味道。</p>
+<p>我喜欢的是糖水，因为它像爱情的味道。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/%E6%88%91%E5%96%9C%E6%AC%A2%E4%B8%80%E4%B8%AA%E5%A7%91%E5%A8%98%EF%BC%8C%E5%A5%B9%E5%8F%AB%E2%80%9C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%9D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BB%BA%E7%AB%8B%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BB%BA%E7%AB%8B%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">微信小程序建立持久化连接的几种方式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:38" itemprop="dateModified" datetime="2021-11-09T12:42:38+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="问题出现的场景"><a href="#问题出现的场景" class="headerlink" title="问题出现的场景"></a>问题出现的场景</h1><p>因为最近在做一个小程序的项目，在建立前后端连接的过程中，发现了一个非常让人奇怪的现象：本身小程序是通过调用wx.https()方法来发起http请求的，但是你会发现，<strong>如果你在后端将值保存到了request或者session中，这个值你再次调用的时候就不见了</strong>！取值的时候会出现NullPointerException，或者你在使用了Spring Security、Shiro这样的权限校验框架以后，<strong>会发现登录后出现了权限丢失的问题。</strong><br>这到底是为什么呢？根据我的经验，我怀疑是session发生了变化，为了证明这一点，我通过观察两次请求的session是否为同一个得到了最终的结论。<br>小程序发起请求的代码是这样的：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BB%BA%E7%AB%8B%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E5%86%99%E4%B8%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E7%9A%84%E5%87%86%E5%A4%A7%E4%B8%80%E6%96%B0%E7%94%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/%E5%86%99%E4%B8%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E7%9A%84%E5%87%86%E5%A4%A7%E4%B8%80%E6%96%B0%E7%94%9F/" class="post-title-link" itemprop="url">我的大学</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:54" itemprop="dateModified" datetime="2021-11-09T12:42:54+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="本文讲什么？"><a href="#本文讲什么？" class="headerlink" title="本文讲什么？"></a>本文讲什么？</h1><p>首先，恭喜各位即将进入大学、即将迈入计算机世界的新生。恭喜你们十三年寒窗苦读，最终换来今日的成绩。<br>笔者希望通过本文，能够以自己的经验，帮助计算机专业的新生，甚至是其他专业的新生，少走一些弯路，能够在大学四年中不负你的梦想。<br>本文分成如下几个模块：</p>
+<ul>
+<li>纠正思想：同为被应试教育荼毒的一代人，深知我们的思维方式存在问题，所以，纠正你的思维方式是非常重要的。</li>
+<li>学习之路：你们一定听老师说过，“上了大学就好了，大学就轻松了”。我可以非常明确的告诉你，这是非常错误的思想！！！如何避免毕业即失业？如何避免“你只是看起来很努力的尴尬境地”？如果把大学比作一首曲子，那么只有学习才是其中的主旋律。</li>
+<li>生活：在大学，学习是主旋律，生活就是点缀。只有将学习和生活安排的井井有条，你才能度过一个完美的大学。<br>好了，就让我们开始吧！</li>
+</ul>
+<h1 id="重塑你的思维方式"><a href="#重塑你的思维方式" class="headerlink" title="重塑你的思维方式"></a>重塑你的思维方式</h1><h3 id="知道自己想要究竟是什么"><a href="#知道自己想要究竟是什么" class="headerlink" title="知道自己想要究竟是什么"></a>知道自己想要究竟是什么</h3><p>我知道，你们当中的部分人，智力非凡，敢打敢拼，考上了211、985，但仍有可能不满意；还有，你们中的大部分人，可能是高考失利、可能是奋斗过只考了个普通本科，心有不甘。但是我想要对你们说的是，当你拿到录取通知书的那一刻，要么滚去复读，要么面对现实。如果你让这种不甘的心情陪伴你整个大学四年，那种感觉会很痛苦的。这就是改变思维方式最重要的一步：认清自己，认清现实。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/%E5%86%99%E4%B8%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E7%9A%84%E5%87%86%E5%A4%A7%E4%B8%80%E6%96%B0%E7%94%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E4%B8%BB%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/%E4%B8%BB%E5%AD%98/" class="post-title-link" itemprop="url">漫谈计算机组成原理（四）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:42:58" itemprop="dateModified" datetime="2021-11-09T12:42:58+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="本文讲什么？"><a href="#本文讲什么？" class="headerlink" title="本文讲什么？"></a>本文讲什么？</h1><p>本文承接《漫谈计算机组成原理（三）存储器概论》。在上一篇文章中，主要介绍了存储器的层次结构。而本文主要讲述存储器层次结构中的主存部分。<br>主存，给我们最直观的感受就是贵。一个DDR4 8G的内存条就达到700元以上。<br>阅读完本文，你不但可以知道为啥内存条这么贵，还能对主存有一个基本的了解。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/%E4%B8%BB%E5%AD%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/URLEncode&Decode%EF%BC%88url%E7%BC%96%E8%A7%A3%E7%A0%81%E9%97%AE%E9%A2%98%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/URLEncode&Decode%EF%BC%88url%E7%BC%96%E8%A7%A3%E7%A0%81%E9%97%AE%E9%A2%98%EF%BC%89/" class="post-title-link" itemprop="url">URLEncode&Decode（url编解码问题）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:26" itemprop="dateModified" datetime="2021-11-09T12:43:26+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天我们来讲一下URL编码（同时被称为Percent-encode，百分比编码）。虽然它相对简单，但是非常的重要，至于为什么，通过我后面的介绍也许你就会明白。<br>虽然叫做URLEncode，但是它普遍用于“统一资源标识符（URI）”中，熟悉HTTP协议的同学应该知道，URL是URI的一部分。同时，URL编码还被用在html页面的表单提交上，通常HTTP协议会先将表单数据进行编码，然后再执行POST或者GET请求。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/URLEncode&Decode%EF%BC%88url%E7%BC%96%E8%A7%A3%E7%A0%81%E9%97%AE%E9%A2%98%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/Spring%E4%B8%AD%E7%9A%84%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/Spring%E4%B8%AD%E7%9A%84%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Spring中的工厂模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:12" itemprop="dateModified" datetime="2021-11-09T12:43:12+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工厂模式是一种在工程中广泛应用的设计模式，对代码的解耦合起到了很大的作用。实际上，我们可以将Spring理解成封装了我们工程中大量重复代码的一种工具，上一节说了，Spring中最为重要的组件就是IOC，而IOC中非常重要的部分就是应用了工厂模式的代码。而工厂模式依赖于Java的反射机制，所以，我们从反射机制讲起，一步步了解Spring的Bean工厂。</p>
+<h1 id="Java中的反射机制"><a href="#Java中的反射机制" class="headerlink" title="Java中的反射机制"></a>Java中的反射机制</h1><p>我们在此处并不会详细介绍反射机制，只会讲述一些简单的内容，详细的东西我会整合成一篇文章供大家参考。<br>反射机制是指<strong>程序在运行的过程中</strong>，对于<strong>任意的一个类</strong>，我们都能够获取它的<strong>所有属性、方法</strong>，对于任何一个对象，都能调用它的任意方法和属性。<br>你还记得我们使用JDBC的流程吗？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/Spring%E4%B8%AD%E7%9A%84%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/SpringIOC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/SpringIOC/" class="post-title-link" itemprop="url">SpringIOC</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:20" itemprop="dateModified" datetime="2021-11-09T12:43:20+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言：Spring核心系列文章"><a href="#前言：Spring核心系列文章" class="headerlink" title="前言：Spring核心系列文章"></a>前言：Spring核心系列文章</h1><p>本文并非教程一类的文章，而是偏向于Spring底层，适合有一定框架编程经验的同学阅读。在这个系列的文章中，我会融合同学们在面试中常见的问题，如什么是IOC容器，遇到重要的，我可能还会以源代码的形式展现相应的内容，这样一问一答的形式，帮助同学们缕清Spring的重要知识点。由于本人能力有限，在行文的过程中可能会出现一些错误，请各位同学、大佬不吝赐教，共同学习。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/SpringIOC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/Springboot%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/Springboot%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">Springboot整合开发</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:17" itemprop="dateModified" datetime="2021-11-09T12:43:17+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="关于SpringBoot"><a href="#关于SpringBoot" class="headerlink" title="关于SpringBoot"></a>关于SpringBoot</h1><p><strong>注：本文讲述的所有代码均可在微信公众号“最高权限比特流”中回复4获取</strong><br>SpringBoot是一种微服务框架。<br>何为微服务框架？<br>在解释微服务框架前，我们需要先拆分一下SpringBoot这个单词。Spring作为java程序猿的我们，应当是颇为熟悉了。Spring意为春天，程序猿的春天。其强大的IOC容器，为我们的开发提供了便捷。而在开发过程中，我们通常使用SSM框架整合，即经典的MVC模型。<br>使用过SSM开发的小伙伴一定知道，SSM整合需要配置各种各样的XML，虽然不用刻意去记忆，但是很繁琐，如果配置文件有问题，就会出现各种稀奇古怪的问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/Springboot%E6%95%B4%E5%90%88%E5%BC%80%E5%8F%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/" class="post-title-link" itemprop="url">Spring+SpringMVC+Mybatis整合及配置详解（一）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-09 12:43:09" itemprop="dateModified" datetime="2021-11-09T12:43:09+08:00">2021-11-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>说起来还是比较有意思的，最近一个同学问我SSM（Spring+SpringMVC+Mybatis）整合开发，整体的思路和配置究竟是怎么个思路。这不禁让我想起了我一开始做SSM整合开发的苦逼时间。本以为不就是个框架吗，有啥难的。但后来真的发现自己动手做起来真的很不简单，尤其是对于新手同学来说。<br>于是我想，百度一下肯定是能够找到整合开发的例子吧。不幸的是，这些教程看起来很高大上，但是实际操作起来，不是缺包就是配置文件本身存在问题，再有就是代码根本就没有贴全。除了这些问题，仅有少数能够配置成功的文章，更是根本连配置信息、代码的解释都没有……<br>我心想，算了，还是自己手动撸一篇文章吧。于是，就有了接下来的这些内容。<br>本文，<strong>主要是针对已经学过Spring，了解SpringMVC和Mybatis的同学。</strong>如果这些还暂时不了解，没关系，先去找些视频或者书籍看看SSM的相关知识再来（笑）。<br><strong>我们以一个小型的项目作为依托</strong>，<strong>先介绍此项目的整体架构和用到的技术，并让你知道每个部分的作用；接着，我将介绍引入的jar文件（Maven），并带你大致了解一下Maven是个啥；接着就是配置文件，我将详细介绍配置文件的作用，以及为啥这样配置；最后，我们将实现一个查询的小功能。</strong><br>这个文章将分成两篇，因为比较长，希望大家多谢耐心。<br>废话不多说，开始吧！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/13/Spring+SpringMVC+Mybatis%E6%95%B4%E5%90%88%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%EF%BC%88%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">UCAS ROOBTYAN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
