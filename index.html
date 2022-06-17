@@ -131,13 +131,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -177,6 +177,82 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/17/Verilator%E7%94%9F%E6%88%90%E4%BB%BF%E7%9C%9F%E6%B3%A2%E5%BD%A2%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+      <meta itemprop="name" content="ROOBTYAN">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="默默无闻贤鱼言">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/17/Verilator%E7%94%9F%E6%88%90%E4%BB%BF%E7%9C%9F%E6%B3%A2%E5%BD%A2%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">Verilator生成仿真波形文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-17 12:49:55 / 修改时间：13:00:43" itemprop="dateCreated datePublished" datetime="2022-06-17T12:49:55+08:00">2022-06-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h1><h2 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h2><ul>
+<li>顶层CPP模板<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;verilated_vcd_c.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Vtop.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv, <span class="keyword">char</span> **env)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Prevent unused variables</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">false</span> &amp;&amp; argc &amp;&amp; argv &amp;&amp; env) &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> std::unique_ptr&lt;VerilatedContext&gt; contextp&#123;<span class="keyword">new</span> VerilatedContext&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Module</span></span><br><span class="line">    Vtop *top = <span class="keyword">new</span> Vtop;</span><br><span class="line"></span><br><span class="line">    Verilated::<span class="built_in">traceEverOn</span>(<span class="literal">true</span>);</span><br><span class="line">    VerilatedVcdC* tfp = <span class="keyword">new</span> VerilatedVcdC;</span><br><span class="line">    top-&gt;<span class="built_in">trace</span>(tfp, <span class="number">0</span>); </span><br><span class="line">    tfp-&gt;<span class="built_in">open</span>(<span class="string">&quot;simx.vcd&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (contextp-&gt;<span class="built_in">time</span>() &lt; <span class="number">20</span> &amp;&amp; !contextp-&gt;<span class="built_in">gotFinish</span>())</span><br><span class="line">    &#123; </span><br><span class="line">    <span class="comment">// simulation code </span></span><br><span class="line">    ……</span><br><span class="line"></span><br><span class="line">    contextp-&gt;<span class="built_in">timeInc</span>(<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    top-&gt;<span class="built_in">eval</span>();</span><br><span class="line"></span><br><span class="line">    tfp-&gt;<span class="built_in">dump</span>(contextp-&gt;<span class="built_in">time</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    top-&gt;<span class="built_in"><span class="keyword">final</span></span>();</span><br><span class="line">    tfp-&gt;<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">delete</span> top;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h2><ul>
+<li><p>command</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># trace generate a wave file</span></span><br><span class="line">verilator -Wall top.v sam.cpp --cc --trace --exe  --build</span><br><span class="line"><span class="comment"># compiles</span></span><br><span class="line">make -C obj_dir -f Vtop.mk Vtop</span><br><span class="line"><span class="comment"># run</span></span><br><span class="line">./obj_dir/Vtop</span><br></pre></td></tr></table></figure></li>
+<li><p>files<br><img src="https://raw.githubusercontent.com/roobtyan/Pic/master/202206171244837.png"></p>
+</li>
+<li><p>wave<br><img src="https://raw.githubusercontent.com/roobtyan/Pic/master/202206171246511.png"></p>
+</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>待更新……</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -869,86 +945,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E5%85%AD%EF%BC%89%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E4%BA%94%EF%BC%89%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%AD%98%E5%82%A8%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.gif">
-      <meta itemprop="name" content="ROOBTYAN">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="默默无闻贤鱼言">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E4%BA%94%EF%BC%89%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%AD%98%E5%82%A8%E5%99%A8/" class="post-title-link" itemprop="url">漫谈计算机组成原理（五）高速缓冲存储器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-13 12:47:29" itemprop="dateCreated datePublished" datetime="2021-11-13T12:47:29+08:00">2021-11-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-09 12:42:21" itemprop="dateModified" datetime="2021-11-09T12:42:21+08:00">2021-11-09</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="本文讲什么？"><a href="#本文讲什么？" class="headerlink" title="本文讲什么？"></a>本文讲什么？</h1><p>老样子，在正式开始介绍“高速缓冲存储器”之前，我们先来了解一下其相关的信息。</p>
-<p><img src="https://raw.githubusercontent.com/roobtyan/BlogPictures/master/computer_associated/%E5%AD%98%E5%82%A8%E5%B1%82%E6%AC%A1%E6%8E%A5%E5%8F%A3%E5%9B%BE.PNG"></p>
-<p>我相信，上面这张图你一定已经非常熟悉了，没错，这就是在本章绪论说的“存储器的层次结构”。<br>上一讲我们介绍了存储层次结构中的L4，即主存。继续向上看，你会看到L3、L2、L1都是高速缓冲存储器。那么究竟什么是高速缓冲存储器呢？那就要从“<strong>速度</strong>”这个关键词说起。<br>随着计算机硬件行业的不断进步，以因特尔为首的芯片企业造出了一代又一代的高速CPU， 可以说CPU处理数据的速度是越来越快。但是从图中我们能够看到，L0-L6的设备的速度是逐渐下降的，而且速度相差越来越大。<br>虽然说近年来的存储技术也有进步，但是照着CPU就差远了。这就造成了CPU和主存之间速度差距越来越大。<strong>高速缓冲存储器</strong>的存在就是为了尽可能的消除这种差距。<br>在这个存储层次结构中，虽然高速缓冲存储器分为三个档次，但是他们的作用都是相同的，都是起到一种桥梁的作用，不同的只是速度和造价。此外，L1的速度几乎和寄存器的速度相同。接下来，我们来看看高速缓冲存储器在CPU中的具体位置。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/13/%E6%BC%AB%E8%B0%88%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E4%BA%94%EF%BC%89%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%AD%98%E5%82%A8%E5%99%A8/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
