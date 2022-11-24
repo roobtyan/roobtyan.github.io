@@ -28,7 +28,7 @@
 <meta property="og:description" content="蓝牙模块基础设置 波特率：要低于38400，否则会出现乱码  BT.read()一次只能读取1个字节， 长字节需要拼接  读取数据：parseInt()将接收转为int数     AT模式 断开开发板的电源，长按蓝牙模块按钮，进入AT模式  代码如下。输入AT，若返回为OK则证明没有问题 123456789101112131415161718192021222324#include &lt;Sof">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-04T07:46:56.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:55:21.512Z">
+<meta property="article:modified_time" content="2022-11-22T13:17:55.623Z">
 <meta property="article:author" content="ROOBTYAN">
 <meta property="article:tag" content="硬件">
 <meta property="article:tag" content="Arduino">
@@ -216,10 +216,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-07-04 15:46:56 / 修改时间：15:55:21" itemprop="dateCreated datePublished" datetime="2022-07-04T15:46:56+08:00">2022-07-04</time>
+      <time title="创建时间：2022-07-04 15:46:56" itemprop="dateCreated datePublished" datetime="2022-07-04T15:46:56+08:00">2022-07-04</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-11-22 21:17:55" itemprop="dateModified" datetime="2022-11-22T21:17:55+08:00">2022-11-22</time>
+      </span>
 
   
 </div>
@@ -243,7 +249,7 @@
 <li><p>断开开发板的电源，长按蓝牙模块按钮，进入AT模式</p>
 </li>
 <li><p>代码如下。输入AT，若返回为OK则证明没有问题</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;SoftwareSerial.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RxD 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TxD 11</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//SoftwareSerial BTSerial(RxD, TxD);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BTSerial Serial3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// replace BAUDRATE as suggested</span></span><br><span class="line">  BTSerial.begin(<span class="number">38400</span>);</span><br><span class="line">  Serial.begin(<span class="number">38400</span>);</span><br><span class="line">  BTSerial.print(<span class="string">&quot;AT\r\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (BTSerial.available())</span><br><span class="line">    Serial.write(BTSerial.read());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (Serial.available())</span><br><span class="line">    BTSerial.write(Serial.read());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;SoftwareSerial.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RxD 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TxD 11</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//SoftwareSerial BTSerial(RxD, TxD);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BTSerial Serial3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// replace BAUDRATE as suggested</span></span><br><span class="line">  BTSerial.begin(<span class="number">9600</span>);</span><br><span class="line">  Serial.begin(<span class="number">38400</span>);</span><br><span class="line">  BTSerial.print(<span class="string">&quot;AT\r\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (BTSerial.available())</span><br><span class="line">    Serial.write(BTSerial.read());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (Serial.available())</span><br><span class="line">    BTSerial.write(Serial.read());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
     </div>
