@@ -20,29 +20,28 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="蓝牙模块基础设置 波特率：要低于38400，否则会出现乱码  BT.read()一次只能读取1个字节， 长字节需要拼接  读取数据：parseInt()将接收转为int数     AT模式 断开开发板的电源，长按蓝牙模块按钮，进入AT模式  代码如下。输入AT，若返回为OK则证明没有问题 123456789101112131415161718192021222324#include &lt;Sof">
+<meta name="description" content="报考建议   导师姓名 基本介绍 研究方向 研二去向 报考建议    靳刚 中科院二级研究员，非常牛的一位老师，在国外呆了好多年。不过靳老师这两年不再亲自带学生了。 偏向光学、力学 中科院力学所 对想从事光学相关研究的，靳老师能提供很好的平台，研二回到力学所以后，有很好的光学实验室，读博较好，就业不太推荐   罗子人 研究员，太极实验室副主任。罗老师人非常非常好，很和蔼的一位老师。不过也不会亲自带">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Arduino开发踩坑">
-<meta property="og:url" content="http://example.com/2022/07/04/Arduino%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91/index.html">
+<meta property="og:title" content="数理学院导师选择Q&#x2F;A">
+<meta property="og:url" content="http://example.com/2023/04/02/%E6%95%B0%E7%90%86%E5%AD%A6%E9%99%A2%E5%AF%BC%E5%B8%88%E9%80%89%E6%8B%A9QA/index.html">
 <meta property="og:site_name" content="默默无闻贤鱼言">
-<meta property="og:description" content="蓝牙模块基础设置 波特率：要低于38400，否则会出现乱码  BT.read()一次只能读取1个字节， 长字节需要拼接  读取数据：parseInt()将接收转为int数     AT模式 断开开发板的电源，长按蓝牙模块按钮，进入AT模式  代码如下。输入AT，若返回为OK则证明没有问题 123456789101112131415161718192021222324#include &lt;Sof">
+<meta property="og:description" content="报考建议   导师姓名 基本介绍 研究方向 研二去向 报考建议    靳刚 中科院二级研究员，非常牛的一位老师，在国外呆了好多年。不过靳老师这两年不再亲自带学生了。 偏向光学、力学 中科院力学所 对想从事光学相关研究的，靳老师能提供很好的平台，研二回到力学所以后，有很好的光学实验室，读博较好，就业不太推荐   罗子人 研究员，太极实验室副主任。罗老师人非常非常好，很和蔼的一位老师。不过也不会亲自带">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-04T07:46:56.000Z">
-<meta property="article:modified_time" content="2022-11-22T13:17:55.623Z">
+<meta property="article:published_time" content="2023-04-02T09:41:27.000Z">
+<meta property="article:modified_time" content="2023-04-02T09:41:59.600Z">
 <meta property="article:author" content="ROOBTYAN">
-<meta property="article:tag" content="硬件">
-<meta property="article:tag" content="Arduino">
+<meta property="article:tag" content="考研">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/07/04/Arduino%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91/">
+<link rel="canonical" href="http://example.com/2023/04/02/%E6%95%B0%E7%90%86%E5%AD%A6%E9%99%A2%E5%AF%BC%E5%B8%88%E9%80%89%E6%8B%A9QA/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/07/04/Arduino%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91/","path":"2022/07/04/Arduino开发踩坑/","title":"Arduino开发踩坑"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/04/02/%E6%95%B0%E7%90%86%E5%AD%A6%E9%99%A2%E5%AF%BC%E5%B8%88%E9%80%89%E6%8B%A9QA/","path":"2023/04/02/数理学院导师选择QA/","title":"数理学院导师选择Q/A"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Arduino开发踩坑 | 默默无闻贤鱼言</title>
+<title>数理学院导师选择Q/A | 默默无闻贤鱼言</title>
   
 
 
@@ -122,7 +121,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">蓝牙模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">基础设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AT%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">AT模式</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%A5%E8%80%83%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">报考建议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%95%E4%B8%9A%E5%8E%BB%E5%90%91"><span class="nav-number">3.</span> <span class="nav-text">毕业去向</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +192,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/04/Arduino%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/02/%E6%95%B0%E7%90%86%E5%AD%A6%E9%99%A2%E5%AF%BC%E5%B8%88%E9%80%89%E6%8B%A9QA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.gif">
@@ -206,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Arduino开发踩坑
+          数理学院导师选择Q/A
         </h1>
 
         <div class="post-meta-container">
@@ -216,16 +215,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-07-04 15:46:56" itemprop="dateCreated datePublished" datetime="2022-07-04T15:46:56+08:00">2022-07-04</time>
+      <time title="创建时间：2023-04-02 17:41:27 / 修改时间：17:41:59" itemprop="dateCreated datePublished" datetime="2023-04-02T17:41:27+08:00">2023-04-02</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-11-22 21:17:55" itemprop="dateModified" datetime="2022-11-22T21:17:55+08:00">2022-11-22</time>
-      </span>
 
   
 </div>
@@ -237,19 +230,80 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="蓝牙模块"><a href="#蓝牙模块" class="headerlink" title="蓝牙模块"></a>蓝牙模块</h1><h2 id="基础设置"><a href="#基础设置" class="headerlink" title="基础设置"></a>基础设置</h2><ul>
-<li><p>波特率：要低于38400，否则会出现乱码</p>
-</li>
-<li><p><code>BT.read()</code>一次只能读取1个字节， 长字节需要拼接</p>
-</li>
-<li><p>读取数据：<code>parseInt()</code>将接收转为int数  </p>
-</li>
-</ul>
-<h3 id="AT模式"><a href="#AT模式" class="headerlink" title="AT模式"></a>AT模式</h3><ul>
-<li><p>断开开发板的电源，长按蓝牙模块按钮，进入AT模式</p>
-</li>
-<li><p>代码如下。输入AT，若返回为OK则证明没有问题</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;SoftwareSerial.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RxD 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TxD 11</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//SoftwareSerial BTSerial(RxD, TxD);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BTSerial Serial3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// replace BAUDRATE as suggested</span></span><br><span class="line">  BTSerial.begin(<span class="number">9600</span>);</span><br><span class="line">  Serial.begin(<span class="number">38400</span>);</span><br><span class="line">  BTSerial.print(<span class="string">&quot;AT\r\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (BTSerial.available())</span><br><span class="line">    Serial.write(BTSerial.read());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (Serial.available())</span><br><span class="line">    BTSerial.write(Serial.read());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+        <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="报考建议"><a href="#报考建议" class="headerlink" title="报考建议"></a>报考建议</h1><table>
+<thead>
+<tr>
+<th>导师姓名</th>
+<th>基本介绍</th>
+<th>研究方向</th>
+<th>研二去向</th>
+<th>报考建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>靳刚</td>
+<td>中科院二级研究员，非常牛的一位老师，在国外呆了好多年。不过靳老师这两年不再亲自带学生了。</td>
+<td>偏向光学、力学</td>
+<td>中科院力学所</td>
+<td>对想从事光学相关研究的，靳老师能提供很好的平台，研二回到力学所以后，有很好的光学实验室，读博较好，就业不太推荐</td>
+</tr>
+<tr>
+<td>罗子人</td>
+<td>研究员，太极实验室副主任。罗老师人非常非常好，很和蔼的一位老师。不过也不会亲自带学生，但是组里会有很多小导指导，都非常负责。</td>
+<td>主要方向：相位计、惯性传感器、信号处理算法、卫星间通讯、激光捕获跟瞄、高精度电子学系统；多数都需要使用FPGA作为系统的开发手段，也有嵌入式系统相关的工作。</td>
+<td>中科院力学所</td>
+<td>想读博的同学，能够提供很好的机会，课题也都非常前沿；想工作的同学，研二暑期允许实习，平时也不会有横向课题，纯科研类课题组，自由时间充分。</td>
+</tr>
+<tr>
+<td>彭晓东</td>
+<td>研究员，空间中心系统室主任，同样不会亲自带学生，老师人也很nice。研二回空间中心。</td>
+<td>主要方向：卫星运动仿真、计算机视觉、AR、并行计算等</td>
+<td>中科院国家空间科学中心</td>
+<td>都是计算机强相关的方向，想读纯计算机的同学还是比较推荐的，读博也是不错的选择。想工作的同学可能要考虑一下，目前已知，空间中心是不放实习的。另外空间中心是航天总体单位，所以可能会有横向课题。不过对于以后想进研究所、国企的同学非常推荐。</td>
+</tr>
+<tr>
+<td>徐鹏</td>
+<td>副研究员。很好的一位老师，对学生很好，一般采用放养的方式。</td>
+<td>主要方向：引力波实验数据处理与分析（数据挖掘、深度学习）</td>
+<td>中科院力学所</td>
+<td>对深度学习、数据分析感兴趣的同学可以报考，想工作的同学可以报考，但是要求有一定的自我管理能力。</td>
+</tr>
+<tr>
+<td>王智</td>
+<td>研究员。长光所空间二部主任。</td>
+<td>主要方向：惯性传感器等，偏向机械。</td>
+<td>中科院长光所</td>
+<td>想读博的同学可以考虑的，长光所有很好的条件。</td>
+</tr>
+<tr>
+<td>董鹏</td>
+<td>这位老师了解不多，有知道的可以帮忙补充。</td>
+<td>惯性传感器、激光干涉测量</td>
+<td>杭高院</td>
+<td>目前应该是处于实验室初建阶段，会有很多的机会</td>
+</tr>
+<tr>
+<td>龙建飞</td>
+<td>副研究员，龙老师是个非常好的老师，而且会亲自带学生。</td>
+<td>主要方向：微牛级推进技术、弱力测量技术（偏重推进器）</td>
+<td>杭高院</td>
+<td>龙老师亲自带学生，会帮助同学在研一下左右发文章，解决毕业问题。就是研一可能会相对忙一些。</td>
+</tr>
+<tr>
+<td>徐禄祥</td>
+<td>副研究员。徐老师和龙老师的研究方向很相似，因为都是一个大课题组的。</td>
+<td>主要方向：微牛级推进技术、弱力测量技术（偏重推进器）</td>
+<td>杭高院</td>
+<td>但是徐老师这里会有不少航天相关的项目，目前杭高院参与的两项空间任务，其中一个就是徐老师组的工作。对于以后想从事航天相关的同学，还是比较建议的，据说培养的是机电一体化的全方位人才（据说）</td>
+</tr>
+</tbody></table>
+<h1 id="毕业去向"><a href="#毕业去向" class="headerlink" title="毕业去向"></a>毕业去向</h1><p>杭高院第一届共招生200人，其中数理学院10人，就业方向：</p>
+<ul>
+<li>华为FPGA：3人</li>
+<li>算法岗：1人</li>
+<li>比亚迪：1人</li>
+<li>国企：3人</li>
+<li>读博：2人</li>
 </ul>
 
     </div>
@@ -260,22 +314,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
-              <a href="/tags/Arduino/" rel="tag"># Arduino</a>
+              <a href="/tags/%E8%80%83%E7%A0%94/" rel="tag"># 考研</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/07/01/%E5%B9%B4%E5%BA%A6%E5%A4%8D%E7%9B%98-2021-4-2022-6/" rel="prev" title="年度复盘(2021.4~2022.6)">
-                  <i class="fa fa-chevron-left"></i> 年度复盘(2021.4~2022.6)
+                <a href="/2022/07/04/Arduino%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91/" rel="prev" title="Arduino开发踩坑">
+                  <i class="fa fa-chevron-left"></i> Arduino开发踩坑
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/04/02/%E6%95%B0%E7%90%86%E5%AD%A6%E9%99%A2%E5%AF%BC%E5%B8%88%E9%80%89%E6%8B%A9QA/" rel="next" title="数理学院导师选择Q/A">
-                  数理学院导师选择Q/A <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
