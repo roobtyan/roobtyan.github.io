@@ -211,7 +211,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-05-29 22:06:34 / 修改时间：22:07:54" itemprop="dateCreated datePublished" datetime="2023-05-29T22:06:34+08:00">2023-05-29</time>
+      <time title="创建时间：2023-05-29 22:06:34 / 修改时间：23:14:30" itemprop="dateCreated datePublished" datetime="2023-05-29T22:06:34+08:00">2023-05-29</time>
     </span>
 
   
@@ -244,6 +244,16 @@
 <li>给矩阵按照某一元素分组</li>
 </ul>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">group &lt;- ifelse(new_matrix$EME1 &gt; median_value, <span class="string">&quot;High&quot;</span>, <span class="string">&quot;Low&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对矩阵进行转置</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gexp_transposed &lt;- as.data.frame(t(gexp))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根据两个矩阵的列合并矩阵</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">merged_data &lt;- merge(clinical, gexp_transposed, by = <span class="string">&quot;submitter_id&quot;</span>)</span><br></pre></td></tr></table></figure>
 
       
     </div>
