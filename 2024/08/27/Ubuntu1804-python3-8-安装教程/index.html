@@ -20,53 +20,29 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body id="bodyx">
-    <div class="hd logodiv">
-    <img src="/img/logo.png" class="logopng">
-        <p class="logot"><span class="logo_1">&lt;</span><span class="logo_2">/</span><span class="logo_3">#</span>
-            ROOBTYAN <span class="logo_3">#</span><span class="logo_2">/</span><span
-                    class="logo_1">&gt;</span>
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            Ubuntu1804 python3.8 安装教程
         </p>
-</div>
-<div class="hd">
-    <ol class="breadcrumb">
-        
-            <li><a class="ba" href="/">首页</a></li>
-        
-            <li><a class="ba" href="/tags">标签</a></li>
-        
-            <li><a class="ba" href="/about">关于</a></li>
-        
-            <li><a class="ba" target="_blank" rel="noopener" href="https://github.com/roobtyan">Github</a></li>
-        
-            <li><a class="ba" href="mailto:roobtyan@qq.com">Email</a></li>
-        
-    </ol>
-    <hr class="breadcrumbhr">
-</div>
-    <div class="hd">
-        
-            
-                
-                    
-                        <div class="titlex">
-                            <p><span class="jing">#</span>
-                                2024
-                            </p>
-                        </div>
-                        
-                            
-                                <a class="flink" href="/2024/08/27/hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%81%A2%E5%A4%8D%E6%B5%81%E7%A8%8B/">
-                                    <div class="list">
-                                        <div class="postname">
-                                            hexo博客的恢复流程
-                                        </div>
-                                        <div class="posttime">
-                                            August 27th
-                                        </div>
-                                    </div>
-                                </a>
-                                
+        <hr>
     </div>
+    <div class="post-content">
+        <ul>
+<li>下载对应source<br>选择合适版本的source，由于1804已经不再维护，好多包不支持，所以选择3.8.10<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tgz</span><br></pre></td></tr></table></figure></li>
+<li>进行配置<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/python3.8</span><br></pre></td></tr></table></figure></li>
+<li>编译<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j8</span><br></pre></td></tr></table></figure></li>
+<li>安装<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure></li>
+<li>建立软链接<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/local/python3.8/bin/python3.8 /usr/bin/python3</span><br></pre></td></tr></table></figure></li>
+<li>验证<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3</span><br></pre></td></tr></table></figure>
+能正常输出版本号就ok了</li>
+</ul>
+
+    </div>
+
+    
+</div>
     <div class="footer" id="footer">
     <p>Copyright © 2020 <a class="flink" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>-<a class="flink" target="_blank" rel="noopener" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
         <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
