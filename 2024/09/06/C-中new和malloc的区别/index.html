@@ -154,7 +154,25 @@
     </div>
 </div>
     <div class="post-content">
-    
+    <h2 id="类型安全方面"><a href="#类型安全方面" class="headerlink" title="类型安全方面"></a>类型安全方面</h2><ul>
+<li>new是类型安全的，malloc不是。new在分配内存时，会考虑到类型的大小，返回正确的类型指针，而malloc只是分配一块内存，不会考虑类型的大小，返回void*指针，因此需要强制类型转换，如：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>* p = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h2><ul>
+<li>new在分配内存时，会调用类的构造函数，而malloc不会，因此使用new时，可以保证对象的构造函数被调用，而malloc不会，需要手动调用构造函数。</li>
+<li>在释放内存时，new会调用类的析构函数，malloc不会，需要特别小心的释放内存，防止内存泄漏</li>
+</ul>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><ul>
+<li>new在分配内存时，如果分配失败，会抛出异常std::bad_alloc</li>
+<li>malloc不会，只会返回NULL，要手动检查</li>
+</ul>
+<h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><ul>
+<li>new可以重载，malloc不能重载</li>
+</ul>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><ul>
+<li>new和delete是C++的关键字，malloc和free是C的库函数</li>
+<li>二者都是在堆上分配内存，且分配的内存都要手动释放</li>
+</ul>
+
 </div> 
 
 <script>
