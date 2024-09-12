@@ -14,7 +14,7 @@
 
 
 
-<title>Leetcode[453] 最小操作次数使数组元素相等 | ROOBTYAN</title>
+<title>力扣分类题集合 | ROOBTYAN</title>
 
 
 
@@ -133,18 +133,24 @@
                             leetcode
                         </a>
                     </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%A7%84%E5%88%92/">
+                            规划
+                        </a>
+                    </span>    
                            
             
         </div>
         <div class="post-title">
             
             
-                Leetcode[453] 最小操作次数使数组元素相等
+                力扣分类题集合
             
             
         </div>
         <span class="post-date">
-            Sep 9, 2024
+            Sep 12, 2024
         </span>
     </div>
     <div class="post-img">
@@ -154,17 +160,147 @@
     </div>
 </div>
     <div class="post-content">
-    <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个长度为 n 的非空整数数组，找到使所有数组元素相等的最小操作次数，每次操作将会使 n - 1 个元素增加 1。</p>
-<p>示例:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">[1,2,3]</span><br><span class="line"></span><br><span class="line">输出:   </span><br><span class="line">3</span><br><span class="line"></span><br><span class="line">解释:</span><br><span class="line">只需要3次操作（注意每次操作会增加两个元素的值）：</span><br><span class="line">[1,2,3]  =&gt;  [2,3,3]  =&gt;  [3,4,3]  =&gt;  [4,4,4]</span><br></pre></td></tr></table></figure>
-
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><ul>
-<li>思维方式：逆向思维、数学</li>
-<li>核心思想：每次操作使<code>n - 1</code>个元素+1， 那么就相当于每次有一个元素-1，直到把所有元素都减小到最小值就可以了</li>
+    <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><ul>
+<li><input disabled="" type="checkbox"> 数组的改变、移动<ul>
+<li><input checked="" disabled="" type="checkbox"> <ol start="453">
+<li>最小移动次数使数组元素相等</li>
+</ol>
+</li>
+<li><input checked="" disabled="" type="checkbox"> <ol start="665">
+<li>非递减数列</li>
+</ol>
+</li>
+<li><input checked="" disabled="" type="checkbox"> <ol start="283">
+<li>移动零</li>
+</ol>
+</li>
 </ul>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int32_t</span> <span class="title">MinMoves</span><span class="params">(std::vector&lt;<span class="type">int32_t</span>&gt; nums)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> min_num = std::<span class="built_in">min_element</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; num : nums) &#123;</span><br><span class="line">        sum += num - min_num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>时间复杂度：O(n)</li>
+</li>
+<li><input disabled="" type="checkbox"> 数组的旋转<ul>
+<li><input disabled="" type="checkbox"> <ol start="189">
+<li>旋转数组</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="396">
+<li>旋转函数</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 统计数组中的元素<ul>
+<li><input disabled="" type="checkbox"> <ol start="645">
+<li>错误的集合</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="697">
+<li>数组的度</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="448">
+<li>找到所有数组中消失的数字</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="442">
+<li>数组中重复的数据</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="41">
+<li>缺失的第一个正数</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 数组的遍历<ul>
+<li><input disabled="" type="checkbox"> <ol start="485">
+<li>最大连续1的个数</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="495">
+<li>提莫攻击</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="414">
+<li>第三大的数</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="628">
+<li>三个数的最大乘积</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 二维数组及滚动数组<ul>
+<li><input disabled="" type="checkbox"> <ol start="118">
+<li>杨辉三角</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="119">
+<li>杨辉三角 II</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="661">
+<li>图片平滑器</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="598">
+<li>范围求和 II</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="419">
+<li>甲板上的战舰</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 特定顺序遍历二维数组<ul>
+<li><input disabled="" type="checkbox"> <ol start="54">
+<li>螺旋矩阵</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="59">
+<li>螺旋矩阵 II</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="498">
+<li>对角线遍历</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 二维数组变换<ul>
+<li><input disabled="" type="checkbox"> <ol start="566">
+<li>重塑矩阵</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="48">
+<li>旋转图像</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="73">
+<li>矩阵置零</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="289">
+<li>生命游戏</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 前缀和数组<ul>
+<li><input disabled="" type="checkbox"> <ol start="303">
+<li>区域和检索 - 数组不可变</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="304">
+<li>二维区域和检索 - 矩阵不可变</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="238">
+<li>除自身以外数组的乘积</li>
+</ol>
+</li>
+</ul>
+</li>
 </ul>
 
 </div> 
@@ -177,17 +313,12 @@
     <nav class="post-nav">
         <div class="prev-item">
            
-                <div class="icon arrow-left"></div>
-                <div class="post-link">
-                    <a href="/2024/09/12/LeetCode-665-%E9%9D%9E%E9%80%92%E5%87%8F%E6%95%B0%E5%88%97/">Prev</a>
-                </div>
-            
         </div>
         <div class="next-item">
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2024/09/06/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Next</a>  
+                  <a href="/2024/09/12/LeetCode-665-%E9%9D%9E%E9%80%92%E5%87%8F%E6%95%B0%E5%88%97/">Next</a>  
                 </div>  
             
         </div>
