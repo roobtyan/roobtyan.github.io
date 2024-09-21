@@ -14,7 +14,7 @@
 
 
 
-<title>tag | ROOBTYAN</title>
+<title>cmake程序打包发布流程 | ROOBTYAN</title>
 
 
 
@@ -93,7 +93,7 @@
                    
           
             
-              <li class="menu-item menu-item-active">
+              <li class="menu-item">
                 <a href="/tag/">标签</a>
               </li> 
                    
@@ -126,73 +126,86 @@
 
       <div class="main">
         <div class="flex-container">
-          <div id="tag">
-  
+          <article id="post">
 
-    <p class="tag-title">/ tags /</p>
-    <div class="tag-cloud">
-  <div class="tag-list">
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/cmake/">
+                            cmake
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                cmake程序打包发布流程
+            
+            
+        </div>
+        <span class="post-date">
+            Sep 21, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <ol>
+<li><p>编写CMakeLists.txt文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include(CPack)</span><br><span class="line">install(TARGETS project-name</span><br><span class="line">        RUNTIME DESTINATION bin)  # RUNTIME 表示可执行文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>build目录下执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake .. -G &quot;Unix Makefiles&quot;</span><br><span class="line">cmake --build . --config Release</span><br><span class="line">cpack</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成的安装包在build目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project-name-1.0.0-Linux.deb</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/09/18/%E8%BF%9F%E5%88%B0%E7%9A%84%E5%B9%B4%E4%B8%AD%E6%80%BB%E7%BB%93%E4%B8%8E%E5%A4%8D%E7%9B%98/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
     
-      <span class="post-tag">
-        <a href="/tags/%E6%8A%80%E6%9C%AF%E6%A0%88/">
-          技术栈
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/%E9%A2%98%E8%A7%A3/">
-          题解
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/leetcode/">
-          leetcode
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/blog/">
-          blog
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/planning/">
-          planning
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/linux/">
-          linux
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/%E6%95%B0%E5%AD%A6/">
-          数学
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/%E5%B9%B4%E4%B8%AD%E6%80%BB%E7%BB%93/">
-          年中总结
-        </a>
-      </span> 
-    
-      <span class="post-tag">
-        <a href="/tags/cmake/">
-          cmake
-        </a>
-      </span> 
+      <div class="post-comment">
+
      
-  </div>
-</div>
+
+     
     
-  
+    
 
 </div>
+     
+  
+</article>
         </div>
       </div>
       
