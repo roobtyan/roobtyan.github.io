@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="roobtyan">
+
+
+
+
+
+
+
+<title>C++包含头文件&lt;filesystem&gt;报错问题解决 | ROOBTYAN</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            <img class="logo-img" src="/logo.png" alt="logo_image">
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">首页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about/">关于</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tag/">标签</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/leetcode/">LeetCode</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="mailto:roobtyan@qq.com">Email</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a target="_blank" rel="noopener" href="https://github.com/roobtyan">Github</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">
+                            问题排查
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                C++包含头文件&lt;filesystem&gt;报错问题解决
+            
+            
+        </div>
+        <span class="post-date">
+            Sep 23, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>错误信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">../base/libbase_lib.a(memory_tool.cpp.o): In function `roobtyan::MemoryTool::MemoryTool()&#x27;: </span><br><span class="line">/quick-dl-learning/learning/base/memory_tool.h:8: undefined reference to `std::filesystem::current_path[abi:cxx11]()&#x27; </span><br><span class="line">../base/libbase_lib.a(memory_tool.cpp.o): In function `std::filesystem::__cxx11::path::operator/=(std::filesystem::__cxx11::path const&amp;)&#x27;: </span><br><span class="line">/usr/include/c++/8/bits/fs_path.h:258: undefined reference to `std::filesystem::__cxx11::path::has_filename() const&#x27; </span><br><span class="line">/usr/include/c++/8/bits/fs_path.h:261: undefined reference to `std::filesystem::__cxx11::path::_M_split_cmpts()&#x27; </span><br><span class="line">../base/libbase_lib.a(memory_tool.cpp.o): In function `std::filesystem::__cxx11::path::is_absolute() const&#x27;: </span><br><span class="line">/usr/include/c++/8/bits/fs_path.h:381: undefined reference to `std::filesystem::__cxx11::path::has_root_directory() const&#x27; </span><br><span class="line">../base/libbase_lib.a(memory_tool.cpp.o): In function `std::filesystem::__cxx11::path::path&lt;char [16], std::filesystem::__cxx11::path&gt;(char const (&amp;) [16], std::filesystem::__cxx11::path::format)&#x27;: </span><br><span class="line">/usr/include/c++/8/bits/fs_path.h:185: undefined reference to `std::filesystem::__cxx11::path::_M_split_cmpts()&#x27; </span><br><span class="line">collect2: error: ld returned 1 exit status </span><br><span class="line">learning/provider/CMakeFiles/learning.dir/build.make:137: recipe for target &#x27;learning/provider/learning&#x27; failed </span><br><span class="line">make[2]: *** [learning/provider/learning] Error 1 </span><br><span class="line">CMakeFiles/Makefile2:5113: recipe for target &#x27;learning/provider/CMakeFiles/learning.dir/all&#x27; failed </span><br><span class="line">make[1]: *** [learning/provider/CMakeFiles/learning.dir/all] Error 2 </span><br><span class="line">Makefile:155: recipe for target &#x27;all&#x27; failed </span><br><span class="line">make: *** [all] Error 2</span><br></pre></td></tr></table></figure>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>Ubuntu 18.04</li>
+<li>CMake 3.20</li>
+<li>g++-8</li>
+</ul>
+<h2 id="cmake配置"><a href="#cmake配置" class="headerlink" title="cmake配置"></a>cmake配置</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(learning)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">17</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是链接阶段引发的问题，编译阶段没有问题。<br>由于filesystem是C++17中引入的新特性，处于实验阶段，未集成到标准库，因此需要在cmake中手动链接</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(learning stdc++fs)</span><br></pre></td></tr></table></figure>
+<p>在gcc9或者更高的版本中，已经完全包含，所以无需手动链接。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/09/21/cmake%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                Roobtyan | 
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
