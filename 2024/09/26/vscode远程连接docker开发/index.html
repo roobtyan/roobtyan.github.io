@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="roobtyan">
+
+
+
+
+
+
+
+<title>vscode连接远程服务器docker开发步骤 | ROOBTYAN</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            <img class="logo-img" src="/logo.png" alt="logo_image">
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">首页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about/">关于</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tag/">标签</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/leetcode/">LeetCode</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="mailto:roobtyan@qq.com">Email</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a target="_blank" rel="noopener" href="https://github.com/roobtyan">Github</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/linux/">
+                            linux
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/docker/">
+                            docker
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                vscode连接远程服务器docker开发步骤
+            
+            
+        </div>
+        <span class="post-date">
+            Sep 26, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><ol>
+<li>服务器安装docker<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install docker.io</span><br></pre></td></tr></table></figure></li>
+<li>赋予docker权限<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> groupadd docker</span><br><span class="line"><span class="built_in">sudo</span> gpasswd -a <span class="variable">$USER</span> docker</span><br><span class="line">newgrp docker</span><br><span class="line"><span class="comment"># 验证是否没有permission denied的问题</span></span><br><span class="line">docker ps</span><br><span class="line"><span class="comment"># 可能需要重启</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure></li>
+<li>服务器docker拉取镜像<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu:18.04</span><br></pre></td></tr></table></figure></li>
+<li>运行docker镜像<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -dit --name remote_server -p 8888:22 -v /home/yanlihui/dev/:/home/dev ubuntu:18.04 /bin/bash</span><br><span class="line">docker </span><br></pre></td></tr></table></figure></li>
+<li>进入ubuntu1804的命令行环境<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it  remote_server /bin/bash </span><br></pre></td></tr></table></figure></li>
+<li>修改密码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure></li>
+<li>安装ssh客户端和服务端<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install openssh-server openssh-client</span><br></pre></td></tr></table></figure></li>
+<li>修改配置文件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#PermitRootLogin prohibit-password # 默认打开 禁止 root 用户使用密码登陆，需要将其注释</span></span><br><span class="line">RSAAuthentication <span class="built_in">yes</span> <span class="comment">#启用 RSA 认证 </span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span> <span class="comment">#启用公钥私钥配对认证方式 </span></span><br><span class="line">PermitRootLogin <span class="built_in">yes</span> <span class="comment">#允许 root 用户使用 ssh 登录</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh restart</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/09/27/LeetCode-448-%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E6%95%B0%E7%BB%84%E4%B8%AD%E6%B6%88%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/09/23/leetcode-396-%E6%97%8B%E8%BD%AC%E5%87%BD%E6%95%B0/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                Roobtyan | 
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
